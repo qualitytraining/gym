@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Trainer | Dashboard Elite</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root { 
+            --verde: #63d67e; 
+            --bg: #121212; 
+            --card: #1c1c1e; 
+            --text: #ffffff; 
+            --violeta: #8e44ad;
+        }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background-color: var(--bg); color: var(--text); margin: 0; padding: 15px; padding-bottom: 120px; 
+        }
+
+        .container { max-width: 450px; margin: auto; }
+
+        /* HEADER */
+        .app-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+        .logo { color: var(--verde); font-weight: bold; font-size: 1.2em; display: flex; align-items: center; gap: 10px; }
+        .lock-icon { background: #2c2c2e; padding: 8px; border-radius: 10px; cursor: pointer; }
+
+        /* TARJETA PERFIL PRINCIPAL */
+        .profile-card { 
+            background: var(--card); border-radius: 20px; padding: 20px; 
+            border: 1px solid #2c2c2e; margin-bottom: 20px;
+        }
+
+        .profile-header { display: flex; gap: 15px; align-items: flex-start; position: relative; }
+        .avatar-box { position: relative; width: 65px; height: 65px; cursor: pointer; }
+        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--verde); }
+        
+        .status-container { position: absolute; right: 0; top: 0; display: flex; background: #2c2c2e; padding: 3px; border-radius: 20px; }
+        .status-label { padding: 4px 12px; border-radius: 15px; font-size: 0.65em; font-weight: bold; color: #555; }
+        .status-label.active-green { background: var(--verde); color: black; }
+        .status-label.active-red { background: #e74c3c; color: white; }
+
+        .user-info p { margin: 0; font-size: 0.8em; color: #888; }
+        .user-info h3 { margin: 2px 0; font-size: 1.2em; color: #fff; }
+
+        /* GRÁFICA DUAL */
+        .chart-box { height: 180px; margin: 15px 0; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 10px; }
+
+        /* UNIDADES Y BOTONES */
+        .unit-selector { display: flex; gap: 10px; margin-bottom: 15px; }
+        .unit-btn { flex: 1; background: #2c2c2e; border: 1px solid #444; color: white; padding: 8px; border-radius: 10px; font-size: 0.75em; cursor: pointer; }
+        .unit-btn.active { border-color: var(--verde); color: var(--verde); }
+
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn { border: none; padding: 12px; border-radius: 12px; font-size: 0.8em; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-grey { background: #2c2c2e; color: white; }
+        .btn-green { background: var(--verde); color: black; }
+        .btn-violet { background: var(--violeta); color: white; }
+
+        /* SECCIONES DE CONTENIDO */
+        .section-box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #2c2c2e; margin-top: 20px; }
+        .section-title { font-size: 0.8em; font-weight: bold; color: #888; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+
+        select, input { width: 100%; background: #2c2c2e; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; margin-bottom: 10px; box-sizing: border-box; }
+
+        .exercise-row { 
+            display: flex; align-items: center; justify-content: space-between; 
+            background: #2c2c2e; margin-bottom: 8px; border-radius: 12px; 
+            padding: 12px; border-left: 4px solid var(--verde);
+        }
+        .exercise-row.done { opacity: 0.4; border-left-color: #555; }
+        
+        .check-box { width: 24px; height: 24px; background: var(--verde); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; cursor: pointer; }
+
+        /* WHATSAPP FOOTER */
+        .wa-footer {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 400px; background: var(--verde);
+            padding: 16px; border-radius: 18px; display: flex; justify-content: center;
+            align-items: center; gap: 10px; color: black; font-weight: bold;
+            text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="app-header">
+        <div class="logo"><span>☰</span> Pro Trainer</div>
+        <div class="lock-icon" onclick="location.reload()">🔒</div>
+    </div>
+
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="avatar-box" onclick="document.getElementById('inputFoto').click()">
+                <img id="fotoPerfil" src="https://via.placeholder.com/150" class="avatar-img">
+                <input type="file" id="inputFoto" hidden accept="image/*" onchange="subirFoto(event)">
+            </div>
+            <div class="user-info">
+                <p>Nombre:</p>
+                <h3 id="labelNombre">-</h3>
+                <p id="labelMeta" style="font-size: 0.7em; color: var(--verde);">Edad: -- | Inicio: --</p>
+            </div>
+            <div class="status-container">
+                <div id="stActivo" class="status-label">Activo</div>
+                <div id="stVencido" class="status-label">Vencido</div>
+            </div>
+        </div>
+
+        <div class="chart-box"><canvas id="graficaDual"></canvas></div>
+
+        <div class="unit-selector">
+            <button id="uKg" class="unit-btn active" onclick="setUnidad('kg')">SISTEMA KG</button>
+            <button id="uLb" class="unit-btn" onclick="setUnidad('lb')">SISTEMA LB</button>
+        </div>
+
+        <div class="action-grid">
+            <button class="btn btn-grey" onclick="registrarPeso()">REGISTRAR PESO</button>
+            <button class="btn btn-green" onclick="renovarPago()">RENOVAR PAGO</button>
+            <button class="btn btn-grey" onclick="abrirGrasa()">CALCULAR % GRASA</button>
+            <button class="btn btn-green" onclick="renovarPago()">RENOVAR MES</button>
+        </div>
+    </div>
+
+    <div class="section-box">
+        <div class="section-title">4 LIBRERIA CUERPO COMPLETO</div>
+        <select id="selGrupo" onchange="updateEjercicios()">
+            <option value="">Seleccionar Grupo...</option>
+            <option value="Pecho">Pecho</option>
+            <option value="Espalda">Espalda</option>
+            <option value="Piernas">Piernas</option>
+            <option value="Brazos">Brazos</option>
+        </select>
+        <select id="selEx"><option value="">Selecciona ejercicio</option></select>
+        <button class="btn btn-violet" onclick="addRutina()" style="width:100%">AÑADIR A MI RUTINA</button>
+        
+        <div id="favs" style="margin-top: 15px; display: flex; gap: 5px; flex-wrap: wrap;"></div>
+    </div>
+
+    <div class="section-box">
+        <div class="section-title">MI RUTINA</div>
+        <div id="listaRutina"></div>
+        <button class="btn btn-grey" onclick="reiniciarSemana()" style="width:100%; margin-top:10px; font-size:0.7em;">REINICIAR SEMANA</button>
+    </div>
+
+    <div class="section-box">
+        <div class="section-title">NOTAS DE SESIÓN</div>
+        <textarea id="txtNotas" rows="3" placeholder="Récords, fatiga o sensaciones..." oninput="saveNotas()" style="width:100%; background:#2c2c2e; border:none; border-radius:12px; color:white; padding:10px;"></textarea>
+    </div>
+
+    <a href="#" class="wa-footer" onclick="sendWA()">
+        ENVIAR REPORTE WHATSAPP 📱
+    </a>
+</div>
+
+<script>
+    const lib = {
+        "Pecho": ["Press Banca Plano", "Press Inclinado", "Aperturas Manc."],
+        "Espalda": ["Jalón al Pecho", "Remo con Barra", "Dominadas"],
+        "Piernas": ["Sentadillas", "Prensa 45", "Peso Muerto Rumano"],
+        "Brazos": ["Curl Bíceps", "Martillo", "Tríceps Polea"]
+    };
+
+    let db = JSON.parse(localStorage.getItem('trainerElite')) || {
+        nombre: "", edad: "", inicio: "", vence: "", logs: [], rutina: [], unidad: "kg", foto: "", notas: "", favs: {}
+    };
+    let chart;
+
+    function init() {
+        if(!db.nombre) {
+            db.nombre = prompt("Nombre del Cliente:");
+            db.edad = prompt("Edad:");
+            db.inicio = new Date().toLocaleDateString();
+            let v = new Date(); v.setDate(v.getDate() + 30);
+            db.vence = v.toISOString();
+            save();
+        }
+        document.getElementById('labelNombre').innerText = db.nombre;
+        document.getElementById('labelMeta').innerText = `Edad: ${db.edad} | Inicio: ${db.inicio}`;
+        document.getElementById('txtNotas').value = db.notas;
+        if(db.foto) document.getElementById('fotoPerfil').src = db.foto;
+        updateUI();
+        renderRutina();
+        renderChart();
+        renderFavs();
+    }
+
+    function save() { localStorage.setItem('trainerElite', JSON.stringify(db)); }
+
+    function subirFoto(e) {
+        const reader = new FileReader();
+        reader.onload = () => { db.foto = reader.result; document.getElementById('fotoPerfil').src = reader.result; save(); };
+        reader.readAsDataURL(e.target.files[0]);
+    }
+
+    function updateUI() {
+        const vence = new Date(db.vence);
+        const activo = new Date() < vence;
+        document.getElementById('stActivo').className = activo ? 'status-label active-green' : 'status-label';
+        document.getElementById('stVencido').className = !activo ? 'status-label active-red' : 'status-label';
+        document.getElementById('uKg').className = db.unidad === 'kg' ? 'unit-btn active' : 'unit-btn';
+        document.getElementById('uLb').className = db.unidad === 'lb' ? 'unit-btn active' : 'unit-btn';
+    }
+
+    function setUnidad(u) { db.unidad = u; save(); updateUI(); renderChart(); }
+
+    function registrarPeso() {
+        let p = prompt(`Peso actual (${db.unidad}):`);
+        if(p) {
+            let val = db.unidad === 'lb' ? parseFloat(p) / 2.204 : parseFloat(p);
+            db.logs.push({ f: new Date().toLocaleDateString(), p: val, g: db.logs.length ? db.logs[db.logs.length-1].g : 0 });
+            save(); renderChart();
+        }
+    }
+
+    function updateEjercicios() {
+        const g = document.getElementById('selGrupo').value;
+        const s = document.getElementById('selEx');
+        s.innerHTML = '<option value="">Selecciona...</option>';
+        if(g) lib[g].forEach(e => s.innerHTML += `<option value="${e}">${e}</option>`);
+    }
+
+    function addRutina(nombre) {
+        const n = nombre || document.getElementById('selEx').value;
+        if(n) {
+            db.rutina.push({ n: n, d: false });
+            db.favs[n] = (db.favs[n] || 0) + 1;
+            save(); renderRutina(); renderFavs();
+        }
+    }
+
+    function renderFavs() {
+        const container = document.getElementById('favs'); container.innerHTML = '';
+        const sorted = Object.keys(db.favs).sort((a,b) => db.favs[b] - db.favs[a]).slice(0,3);
+        sorted.forEach(f => {
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-grey'; btn.style.fontSize = '0.6em'; btn.innerText = `⭐ ${f}`;
+            btn.onclick = () => addRutina(f); container.appendChild(btn);
+        });
+    }
+
+    function renderRutina() {
+        const cont = document.getElementById('listaRutina'); cont.innerHTML = '';
+        db.rutina.forEach((ex, i) => {
+            cont.innerHTML += `
+                <div class="exercise-row ${ex.d ? 'done' : ''}">
+                    <span style="font-size:0.85em">${i+1}. ${ex.n}</span>
+                    <div style="display:flex; gap:10px">
+                        <div class="check-box" onclick="toggle(${i})">${ex.d ? '✓' : ''}</div>
+                        <span onclick="del(${i})" style="cursor:pointer">🗑️</span>
+                    </div>
+                </div>`;
+        });
+    }
+
+    function toggle(i) { db.rutina[i].d = !db.rutina[i].d; save(); renderRutina(); }
+    function del(i) { if(confirm("¿Eliminar?")) { db.rutina.splice(i, 1); save(); renderRutina(); } }
+    function reiniciarSemana() { if(confirm("¿Reiniciar checks?")) { db.rutina.forEach(e => e.d = false); save(); renderRutina(); } }
+    function saveNotas() { db.notas = document.getElementById('txtNotas').value; save(); }
+
+    function renderChart() {
+        const ctx = document.getElementById('graficaDual').getContext('2d');
+        if(chart) chart.destroy();
+        chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: db.logs.map(l => l.f),
+                datasets: [{
+                    label: 'Peso', data: db.logs.map(l => (db.unidad==='lb'?l.p*2.204:l.p).toFixed(1)),
+                    borderColor: '#63d67e', tension: 0.4, fill: true, backgroundColor: 'rgba(99, 214, 126, 0.1)'
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false }, ticks: { color: '#555', font: { size: 8 } } } } }
+        });
+    }
+
+    function renovarPago() {
+        if(confirm("¿Confirmar renovación de 30 días?")) {
+            let v = new Date(); v.setDate(v.getDate() + 30);
+            db.vence = v.toISOString(); save(); updateUI();
+        }
+    }
+
+    function sendWA() {
+        const v = new Date(db.vence);
+        const dias = Math.ceil((v - new Date()) / (1000*60*60*24));
+        const statusMsg = dias <= 0 ? "⚠️ PAGO VENCIDO" : `📅 Vence en: ${dias} días`;
+        const lastP = db.logs.length ? (db.unidad==='lb'?db.logs[db.logs.length-1].p*2.204:db.logs[db.logs.length-1].p).toFixed(1) : "0";
+        
+        const text = `💪 *REPORTE FIT: ${db.nombre}*\n` +
+                     `⚖️ Peso: ${lastP} ${db.unidad}\n` +
+                     `✅ Rutina: ${db.rutina.filter(e=>e.d).length}/${db.rutina.length}\n` +
+                     `📝 Notas: ${db.notas || 'Sin novedades'}\n` +
+                     `---------------------------\n` +
+                     `${statusMsg}`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
+    }
+
+    init();
+</script>
+</body>
+</html>
