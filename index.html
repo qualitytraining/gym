@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pro Trainer | Dashboard Elite</title>
-    <link rel="icon" href="tu-logo.png">
-    <link rel="apple-touch-icon" href="tu-logo.png">
+    
+    <link rel="icon" href="MiLogoPro.png" type="image/png">
+    <link rel="apple-touch-icon" href="MiLogoPro.png">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root { 
@@ -37,7 +39,7 @@
         }
 
         .profile-header { display: flex; gap: 15px; align-items: flex-start; position: relative; }
-        .avatar-box { position: relative; width: 80px; height: 80px; cursor: pointer; }
+        .avatar-box { position: relative; width: 80px; height: 80px; }
         .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--verde); background: #000; }
         
         .status-container { position: absolute; right: 0; top: 0; display: flex; background: #2c2c2e; padding: 3px; border-radius: 20px; }
@@ -48,7 +50,7 @@
         .user-info p { margin: 0; font-size: 0.8em; color: #888; }
         .user-info h3 { margin: 2px 0; font-size: 1.3em; color: #fff; text-transform: uppercase; }
 
-        .chart-box { height: 200px; margin: 15px 0; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 10px; }
+        .chart-box { height: 180px; margin: 15px 0; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 10px; }
 
         /* SECCIÓN DE PAGOS */
         .payment-section { margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; }
@@ -58,15 +60,13 @@
         .btn-pay { 
             display: flex; align-items: center; justify-content: center; gap: 8px;
             text-decoration: none; padding: 12px; border-radius: 12px; font-size: 0.75em; font-weight: bold; color: white;
-            transition: transform 0.2s;
         }
-        .btn-pay:active { transform: scale(0.95); }
         .btn-ath { background: var(--ath); }
         .btn-paypal { background: var(--paypal); }
 
-        /* ACCIONES RÁPIDAS */
+        /* ACCIONES */
         .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .btn { border: none; padding: 14px; border-radius: 12px; font-size: 0.8em; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn { border: none; padding: 14px; border-radius: 12px; font-size: 0.8em; font-weight: bold; cursor: pointer; }
         .btn-grey { background: #2c2c2e; color: white; }
         .btn-green { background: var(--verde); color: black; }
 
@@ -76,22 +76,15 @@
             background-color: rgba(0,0,0,0.9); align-items: center; justify-content: center; backdrop-filter: blur(5px);
         }
         .modal-content { background: var(--card); padding: 25px; border-radius: 25px; width: 85%; max-width: 380px; border: 1px solid var(--verde); }
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 0.75em; color: #888; margin-bottom: 5px; }
 
-        /* CONTENIDO */
+        /* RUTINA */
         .section-box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #2c2c2e; margin-top: 20px; }
         .section-title { font-size: 0.8em; font-weight: bold; color: #888; margin-bottom: 15px; text-transform: uppercase; border-left: 3px solid var(--verde); padding-left: 10px; }
         
-        select, textarea, input[type="number"], input[type="text"] { 
-            width: 100%; background: #2c2c2e; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; margin-bottom: 10px; box-sizing: border-box; font-family: inherit; 
-        }
+        select, textarea, input { width: 100%; background: #2c2c2e; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; margin-bottom: 10px; box-sizing: border-box; font-family: inherit; }
 
-        .exercise-row { 
-            display: flex; align-items: center; justify-content: space-between; 
-            background: #2c2c2e; margin-bottom: 8px; border-radius: 12px; padding: 14px; border-left: 4px solid var(--verde);
-        }
-        .exercise-row.done { opacity: 0.3; border-left-color: #555; filter: grayscale(1); }
+        .exercise-row { display: flex; align-items: center; justify-content: space-between; background: #2c2c2e; margin-bottom: 8px; border-radius: 12px; padding: 14px; border-left: 4px solid var(--verde); }
+        .exercise-row.done { opacity: 0.3; filter: grayscale(1); }
         .check-box { width: 28px; height: 28px; background: var(--verde); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; cursor: pointer; }
 
         .wa-footer {
@@ -113,14 +106,13 @@
 
     <div class="profile-card">
         <div class="profile-header">
-            <div class="avatar-box" onclick="document.getElementById('inputFoto').click()">
-                <img id="fotoPerfil" src="tu-logo.png" onerror="this.src='https://via.placeholder.com/150?text=LOGO'" class="avatar-img">
-                <input type="file" id="inputFoto" hidden accept="image/*" onchange="subirFoto(event)">
+            <div class="avatar-box">
+                <img id="fotoPerfil" src="MiLogoPro.png" onerror="this.src='https://via.placeholder.com/150?text=Logo+Error'" class="avatar-img">
             </div>
             <div class="user-info">
                 <p>Atleta:</p>
                 <h3 id="labelNombre">-</h3>
-                <p id="labelMeta" style="font-size: 0.7em; color: var(--verde);">Cargando datos...</p>
+                <p id="labelMeta" style="font-size: 0.7em; color: var(--verde);">Cargando perfil...</p>
             </div>
             <div class="status-container">
                 <div id="stActivo" class="status-label">ACTIVO</div>
@@ -141,32 +133,14 @@
         <div class="action-grid">
             <button class="btn btn-grey" onclick="registrarPeso()">+ PESO</button>
             <button class="btn btn-grey" onclick="abrirGrasa()">% GRASA</button>
-            <button class="btn btn-green" onclick="renovarPago()" style="grid-column: span 2;">CONFIRMAR PAGO MENSUAL</button>
+            <button class="btn btn-green" onclick="renovarPago()" style="grid-column: span 2;">CONFIRMAR RENOVACIÓN</button>
         </div>
     </div>
 
     <div class="section-box">
-        <div class="section-title">LIBRERIA DE EJERCICIOS</div>
-        <select id="selGrupo" onchange="updateEjercicios()">
-            <option value="">Seleccionar Grupo...</option>
-            <option value="Pecho">Pecho</option>
-            <option value="Espalda">Espalda</option>
-            <option value="Piernas">Piernas</option>
-            <option value="Brazos">Brazos / Hombros</option>
-        </select>
-        <select id="selEx"><option value="">Selecciona ejercicio</option></select>
-        <button class="btn btn-green" onclick="addRutina()" style="width:100%; background: var(--violeta); color: white;">AÑADIR A MI PLAN</button>
-    </div>
-
-    <div class="section-box">
-        <div class="section-title">MI RUTINA DIARIA</div>
+        <div class="section-title">RUTINA DIARIA</div>
         <div id="listaRutina"></div>
-        <button class="btn btn-grey" onclick="reiniciarSemana()" style="width:100%; margin-top:10px; font-size:0.7em;">REINICIAR PROGRESO DIARIO</button>
-    </div>
-
-    <div class="section-box">
-        <div class="section-title">NOTAS DE SESIÓN</div>
-        <textarea id="txtNotas" rows="2" placeholder="Escribe aquí tus récords o sensaciones..." oninput="saveNotas()"></textarea>
+        <button class="btn btn-grey" onclick="reiniciarSemana()" style="width:100%; margin-top:10px; font-size:0.7em;">REINICIAR CHECKS</button>
     </div>
 
     <a href="#" class="wa-footer" onclick="sendWA()">
@@ -177,34 +151,17 @@
 <div id="modalGrasa" class="modal">
     <div class="modal-content">
         <h3 style="color:var(--verde); margin-top:0">Composición Corporal</h3>
-        <p style="font-size: 0.7em; color: #888; margin-bottom: 15px;">Calculado mediante el método de la Marina (Navy).</p>
-        <div class="input-group">
-            <label>Cintura (cm) - al ombligo</label>
-            <input type="number" id="cin" placeholder="Ej: 85">
-        </div>
-        <div class="input-group">
-            <label>Cuello (cm) - parte ancha</label>
-            <input type="number" id="cue" placeholder="Ej: 38">
-        </div>
-        <div class="input-group">
-            <label>Altura (cm)</label>
-            <input type="number" id="alt" placeholder="Ej: 175">
-        </div>
-        <button class="btn btn-green" style="width:100%" onclick="calcularGrasa()">CALCULAR Y GUARDAR</button>
+        <input type="number" id="cin" placeholder="Cintura (cm)">
+        <input type="number" id="cue" placeholder="Cuello (cm)">
+        <input type="number" id="alt" placeholder="Altura (cm)">
+        <button class="btn btn-green" style="width:100%" onclick="calcularGrasa()">GUARDAR</button>
         <button class="btn btn-grey" style="width:100%; margin-top:10px" onclick="document.getElementById('modalGrasa').style.display='none'">CERRAR</button>
     </div>
 </div>
 
 <script>
-    const lib = {
-        "Pecho": ["Press Banca Plano", "Press Inclinado", "Aperturas Manc.", "Cruce Poleas"],
-        "Espalda": ["Jalón al Pecho", "Remo con Barra", "Dominadas", "Remo en Polea"],
-        "Piernas": ["Sentadillas", "Prensa 45", "Peso Muerto Rumano", "Extensión Cuádriceps"],
-        "Brazos": ["Curl Bíceps", "Martillo", "Tríceps Polea", "Press Militar Hombros"]
-    };
-
-    let db = JSON.parse(localStorage.getItem('trainerEliteV3')) || {
-        nombre: "", edad: "", inicio: "", vence: "", logs: [], rutina: [], unidad: "kg", foto: "", notas: ""
+    let db = JSON.parse(localStorage.getItem('trainerEliteV4')) || {
+        nombre: "", edad: "", inicio: "", vence: "", logs: [], rutina: [{n:"Sentadillas",d:false},{n:"Press Banca",d:false}], foto: "MiLogoPro.png", notas: ""
     };
     let chart;
 
@@ -218,21 +175,13 @@
             save();
         }
         document.getElementById('labelNombre').innerText = db.nombre;
-        document.getElementById('labelMeta').innerText = `Edad: ${db.edad} | Miembro desde: ${db.inicio}`;
-        document.getElementById('txtNotas').value = db.notas || "";
-        if(db.foto) document.getElementById('fotoPerfil').src = db.foto;
+        document.getElementById('labelMeta').innerText = `Edad: ${db.edad} | Inicio: ${db.inicio}`;
         updateUI();
         renderRutina();
         renderChart();
     }
 
-    function save() { localStorage.setItem('trainerEliteV3', JSON.stringify(db)); }
-
-    function subirFoto(e) {
-        const reader = new FileReader();
-        reader.onload = () => { db.foto = reader.result; document.getElementById('fotoPerfil').src = reader.result; save(); };
-        reader.readAsDataURL(e.target.files[0]);
-    }
+    function save() { localStorage.setItem('trainerEliteV4', JSON.stringify(db)); }
 
     function updateUI() {
         const vence = new Date(db.vence);
@@ -242,11 +191,8 @@
     }
 
     function registrarPeso() {
-        let p = prompt("Introduce tu peso actual:");
-        if(p) {
-            db.logs.push({ f: new Date().toLocaleDateString(), p: parseFloat(p), g: db.logs.length ? db.logs[db.logs.length-1].g : 0 });
-            save(); renderChart();
-        }
+        let p = prompt("Peso actual:");
+        if(p) { db.logs.push({ f: new Date().toLocaleDateString(), p: parseFloat(p), g: db.logs.length ? db.logs[db.logs.length-1].g : 0 }); save(); renderChart(); }
     }
 
     function abrirGrasa() { document.getElementById('modalGrasa').style.display = 'flex'; }
@@ -261,40 +207,18 @@
             else db.logs.push({ f: new Date().toLocaleDateString(), p: 0, g: grasa });
             save(); renderChart();
             document.getElementById('modalGrasa').style.display = 'none';
-            alert(`% Grasa guardado: ${grasa}%`);
         }
-    }
-
-    function updateEjercicios() {
-        const g = document.getElementById('selGrupo').value;
-        const s = document.getElementById('selEx');
-        s.innerHTML = '<option value="">Selecciona...</option>';
-        if(g) lib[g].forEach(e => s.innerHTML += `<option value="${e}">${e}</option>`);
-    }
-
-    function addRutina() {
-        const n = document.getElementById('selEx').value;
-        if(n) { db.rutina.push({ n: n, d: false }); save(); renderRutina(); }
     }
 
     function renderRutina() {
         const cont = document.getElementById('listaRutina'); cont.innerHTML = '';
         db.rutina.forEach((ex, i) => {
-            cont.innerHTML += `
-                <div class="exercise-row ${ex.d ? 'done' : ''}">
-                    <span style="font-size:0.9em; font-weight:500;">${ex.n}</span>
-                    <div style="display:flex; gap:12px; align-items:center">
-                        <div class="check-box" onclick="toggle(${i})">${ex.d ? '✓' : ''}</div>
-                        <span onclick="del(${i})" style="font-size:1.2em">🗑️</span>
-                    </div>
-                </div>`;
+            cont.innerHTML += `<div class="exercise-row ${ex.d ? 'done' : ''}"><span>${ex.n}</span><div class="check-box" onclick="toggle(${i})">${ex.d ? '✓' : ''}</div></div>`;
         });
     }
 
     function toggle(i) { db.rutina[i].d = !db.rutina[i].d; save(); renderRutina(); }
-    function del(i) { if(confirm("¿Quitar de la rutina?")) { db.rutina.splice(i, 1); save(); renderRutina(); } }
-    function reiniciarSemana() { if(confirm("¿Reiniciar todos los checks?")) { db.rutina.forEach(e => e.d = false); save(); renderRutina(); } }
-    function saveNotas() { db.notas = document.getElementById('txtNotas').value; save(); }
+    function reiniciarSemana() { db.rutina.forEach(e => e.d = false); save(); renderRutina(); }
 
     function renderChart() {
         const ctx = document.getElementById('graficaDual').getContext('2d');
@@ -304,33 +228,23 @@
             data: {
                 labels: db.logs.map(l => l.f),
                 datasets: [
-                    { label: 'Peso', data: db.logs.map(l => l.p), borderColor: '#63d67e', backgroundColor: 'rgba(99,214,126,0.1)', fill: true, tension: 0.4, yAxisID: 'y' },
+                    { label: 'Peso', data: db.logs.map(l => l.p), borderColor: '#63d67e', tension: 0.4, yAxisID: 'y' },
                     { label: '% Grasa', data: db.logs.map(l => l.g || 0), borderColor: '#8e44ad', tension: 0.4, yAxisID: 'y1' }
                 ]
             },
-            options: { 
-                responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { labels: { color: '#888', font: { size: 10 } } } },
-                scales: { 
-                    y: { display: false }, 
-                    y1: { display: false, position: 'right' },
-                    x: { grid: { display: false }, ticks: { color: '#555', font: { size: 9 } } } 
-                }
-            }
+            options: { responsive: true, maintainAspectRatio: false, scales: { y: { display: false }, y1: { display: false, position: 'right' }, x: { grid: { display: false } } } }
         });
     }
 
     function renovarPago() {
-        if(confirm("¿Confirmar recepción de pago y renovar 30 días?")) {
+        if(confirm("¿Renovar 30 días?")) {
             let v = new Date(); v.setDate(v.getDate() + 30);
             db.vence = v.toISOString(); save(); updateUI();
         }
     }
 
     function sendWA() {
-        const p = db.logs.length ? db.logs[db.logs.length-1].p : "--";
-        const g = db.logs.length ? (db.logs[db.logs.length-1].g || "--") : "--";
-        const text = `🔥 *REPORTE PRO TRAINER*\nAtleta: ${db.nombre}\n⚖️ Peso: ${p}kg\n📉 Grasa: ${g}%\n✅ Rutina: ${db.rutina.filter(e=>e.d).length}/${db.rutina.length}\n📝 Notas: ${db.notas || 'Sin notas'}`;
+        const text = `💪 REPORTE: ${db.nombre}\n✅ Rutina: ${db.rutina.filter(e=>e.d).length}/${db.rutina.length}`;
         window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
     }
 
@@ -338,3 +252,5 @@
 </script>
 </body>
 </html>
+</html>
+
