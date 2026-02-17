@@ -14,6 +14,7 @@
             --text-dim: #a0a0a0;
             --ath: #ff6b00;
             --paypal: #003087;
+            --facebook: #1877F2; /* Color oficial Facebook */
         }
 
         body {
@@ -48,7 +49,7 @@
         .nav-header h2 { color: var(--verde); margin: 0; font-size: 1.2em; font-weight: 600; }
         .lock-box { background: #2a2a2a; padding: 8px 12px; border-radius: 12px; font-size: 0.9em; }
 
-        /* BRANDING AREA (LOGO BRUTAL) */
+        /* BRANDING AREA */
         .brand-space {
             text-align: center;
             margin-bottom: 20px;
@@ -80,7 +81,6 @@
         }
         
         .user-data h4 { margin: 0; font-size: 0.85em; color: white; font-weight: 400; }
-        .user-data p { margin: 2px 0; font-size: 0.65em; color: var(--text-dim); }
         .display-name { color: var(--verde); font-size: 1.1em; font-weight: bold; margin-top: 5px; display: block; }
 
         .status-toggle {
@@ -93,15 +93,8 @@
             padding: 3px;
             border: 1px solid #333;
         }
-        .status-toggle span {
-            padding: 4px 10px;
-            font-size: 0.55em;
-            border-radius: 15px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
+        .status-toggle span { padding: 4px 10px; font-size: 0.55em; border-radius: 15px; font-weight: bold; text-transform: uppercase; }
         .status-toggle .active-pill { background: #fff; color: #000; }
-        .status-toggle .inactive-pill { color: #555; }
 
         /* CHART AREA */
         .chart-section {
@@ -139,18 +132,24 @@
         .btn-dark { background: #333; color: #aaa; }
         .btn-green { background: var(--verde); color: #000; }
         
-        /* PAYMENT BUTTONS */
-        .payment-tag {
+        /* PAYMENT & SOCIAL BUTTONS */
+        .section-tag {
             grid-column: span 2;
             font-size: 0.55em;
             color: var(--verde);
             text-align: center;
             margin: 10px 0 -5px 0;
             letter-spacing: 1px;
-            opacity: 0.8;
+            text-transform: uppercase;
         }
         .btn-ath { background: var(--ath); color: white; }
         .btn-paypal { background: var(--paypal); color: white; }
+        .btn-fb { 
+            background: var(--facebook); 
+            color: white; 
+            grid-column: span 2; /* Para que destaque en la base */
+            margin-top: 5px;
+        }
 
         /* ROUTINE SECTION */
         .routine-section {
@@ -162,30 +161,6 @@
             margin-bottom: 20px;
         }
         .routine-header { font-size: 0.85em; font-weight: bold; margin-bottom: 15px; }
-        
-        .select-input {
-            background: #1a1a1a;
-            padding: 14px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            font-size: 0.75em;
-            color: #777;
-            display: flex;
-            justify-content: space-between;
-            border: 1px solid #333;
-        }
-
-        .exercise-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 5px;
-            font-size: 0.8em;
-            border-bottom: 1px solid #333;
-        }
-        .ex-num { width: 30px; color: #444; font-weight: bold; }
-        .ex-name { flex-grow: 1; color: #ddd; }
-        .ex-check { color: var(--verde); font-weight: bold; }
-        .ex-fire { margin-left: 10px; filter: grayscale(0.5); }
 
         .footer-wa {
             background: var(--verde);
@@ -201,7 +176,6 @@
             gap: 10px;
             text-decoration: none;
             font-size: 0.9em;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
     </style>
 </head>
@@ -227,16 +201,15 @@
         <div class="profile-row">
             <img src="https://via.placeholder.com/150?text=+" class="avatar" id="atletaFoto" onclick="document.getElementById('fileInput').click()">
             <div class="user-data">
-                <h4>Nombre:</h4>
-                <p id="fechaHoy">Cargando fecha...</p>
-                <span class="display-name" id="atletaNombre">Display Nombre</span>
+                <h4>Nombre Atleta:</h4>
+                <span class="display-name" id="atletaNombre">Cargando...</span>
             </div>
         </div>
 
         <div class="chart-section">
             <div class="chart-info">
                 <b>Grafica Dual</b>
-                <p>Seguimiento de peso y grasa corporal.</p>
+                <p>Progreso de peso registrado.</p>
             </div>
             <div class="chart-box">
                 <canvas id="miniChart"></canvas>
@@ -245,27 +218,22 @@
 
         <div class="btn-container">
             <button class="btn btn-dark" onclick="registrarPeso()">Registrar Peso</button>
-            <button class="btn btn-green" onclick="renovar()">Renovar Pago</button>
             <button class="btn btn-dark" onclick="mensajeCoach()">Mensaje Coach</button>
-            <button class="btn btn-green" onclick="renovar()">Renovar Mes</button>
             
-            <div class="payment-tag">Métodos de Pago Rápidos</div>
+            <div class="section-tag">Pagos y Comunidad</div>
             
             <a href="https://athmovil.me/tu_usuario" target="_blank" class="btn btn-ath">ATH Móvil</a>
             <a href="https://paypal.me/tu_usuario" target="_blank" class="btn btn-paypal">PayPal</a>
+            
+            <a href="https://facebook.com/TU_PAGINA" target="_blank" class="btn btn-fb">
+                Siguenos en Facebook
+            </a>
         </div>
     </div>
 
     <div class="routine-section">
-        <div class="routine-header">4 LIBRERIA CURSO COMPLETO</div>
-        <div class="select-input"><span>⌵ selectEjercicios</span></div>
-        <div class="select-input"><span>⌵ selectEjercicios</span></div>
-        <div class="select-input"><span>⌵ selectEjercicios</span></div>
-        
-        <p style="font-size: 0.65em; margin: 20px 0 10px 5px; color: var(--text-dim); text-transform: uppercase;">MI Rutina</p>
-        
-        <div id="listaRutina">
-            </div>
+        <div class="routine-header">MI RUTINA ELITE</div>
+        <div id="listaRutina"></div>
     </div>
 
     <input type="file" id="fileInput" hidden accept="image/*" onchange="cambiarFoto(event)">
@@ -276,82 +244,58 @@
 </div>
 
 <script>
-    // Configuración Inicial de Datos
-    let db = JSON.parse(localStorage.getItem('proTrainerDB_V12')) || {
+    let db = JSON.parse(localStorage.getItem('proTrainerDB_V13')) || {
         nombre: "",
-        pesos: [70, 72, 71, 73, 72, 74],
+        pesos: [70, 72, 71, 74, 73, 75],
         foto: "",
         ejercicios: [
-            {n: "Press de Banca Plano", d: true, f: true},
-            {n: "Press Inclinado Mancuerna", d: false, f: false},
-            {n: "Jalón al Pecho", d: false, f: false},
-            {n: "Sentadilla Libre", d: false, f: false}
+            {n: "Press de Banca Plano", d: true},
+            {n: "Press Inclinado Mancuerna", d: false},
+            {n: "Jalón al Pecho", d: false}
         ]
     };
 
     function init() {
         if(!db.nombre) {
-            db.nombre = prompt("¿Nombre del Atleta?") || "Atleta Pro";
+            db.nombre = prompt("Nombre del Atleta:") || "Atleta";
             save();
         }
         document.getElementById('atletaNombre').innerText = db.nombre;
-        document.getElementById('fechaHoy').innerText = "Fecha - " + new Date().toLocaleDateString();
         if(db.foto) document.getElementById('atletaFoto').src = db.foto;
-        
         renderChart();
         renderRutina();
     }
 
-    function save() { localStorage.setItem('proTrainerDB_V12', JSON.stringify(db)); }
+    function save() { localStorage.setItem('proTrainerDB_V13', JSON.stringify(db)); }
 
     function renderRutina() {
         const cont = document.getElementById('listaRutina');
         cont.innerHTML = '';
         db.ejercicios.forEach((ex, i) => {
             cont.innerHTML += `
-                <div class="exercise-item" onclick="toggleEx(${i})">
-                    <span class="ex-num">${i+1}</span>
-                    <span class="ex-name" style="${ex.d ? 'color:var(--verde);' : ''}">${ex.n}</span>
-                    ${ex.d ? '<span class="ex-check">✓</span>' : ''}
-                    ${ex.f ? '<span class="ex-fire">🔥</span>' : ''}
-                </div>
-            `;
+                <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #333; font-size:0.8em;" onclick="toggleEx(${i})">
+                    <span>${i+1}. ${ex.n}</span>
+                    <span style="color:var(--verde)">${ex.d ? '✓' : ''}</span>
+                </div>`;
         });
     }
 
-    function toggleEx(i) {
-        db.ejercicios[i].d = !db.ejercicios[i].d;
-        save();
-        renderRutina();
-    }
+    function toggleEx(i) { db.ejercicios[i].d = !db.ejercicios[i].d; save(); renderRutina(); }
 
     function renderChart() {
         const ctx = document.getElementById('miniChart').getContext('2d');
-        if(window.myChart) window.myChart.destroy();
-        window.myChart = new Chart(ctx, {
+        new Chart(ctx, {
             type: 'line',
             data: {
                 labels: db.pesos.map((_, i) => i),
-                datasets: [{
-                    data: db.pesos,
-                    borderColor: '#63d67e',
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    tension: 0.4,
-                    fill: true,
-                    backgroundColor: 'rgba(99, 214, 126, 0.05)'
-                }]
+                datasets: [{ data: db.pesos, borderColor: '#63d67e', borderWidth: 2, pointRadius: 0, tension: 0.4 }]
             },
-            options: {
-                plugins: { legend: { display: false } },
-                scales: { x: { display: false }, y: { display: false } },
-                maintainAspectRatio: false
-            }
+            options: { plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } }, maintainAspectRatio: false }
         });
     }
 
     function registrarPeso() {
-        let p = prompt("Peso de hoy:");
+        let p = prompt("Peso:");
         if(p) { db.pesos.push(parseFloat(p)); save(); renderChart(); }
     }
 
@@ -361,9 +305,8 @@
         reader.readAsDataURL(e.target.files[0]);
     }
 
-    function renovar() { window.open('https://athmovil.me/tu_usuario'); }
     function mensajeCoach() { window.open('https://wa.me/TU_NUMERO'); }
-    function enviarReporte() { window.open(`https://wa.me/?text=Reporte de ${db.nombre}: Entrenamiento completado.`); }
+    function enviarReporte() { window.open(`https://wa.me/?text=Reporte de ${db.nombre}`); }
 
     init();
 </script>
