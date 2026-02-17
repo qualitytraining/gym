@@ -12,6 +12,8 @@
             --card: #1c1c1e; 
             --text: #ffffff; 
             --violeta: #8e44ad;
+            --ath: #ff6b00;
+            --paypal: #003087;
         }
         
         body { 
@@ -26,7 +28,7 @@
         .logo { color: var(--verde); font-weight: bold; font-size: 1.2em; display: flex; align-items: center; gap: 10px; }
         .lock-icon { background: #2c2c2e; padding: 8px; border-radius: 10px; cursor: pointer; }
 
-        /* TARJETA PERFIL PRINCIPAL */
+        /* TARJETA PERFIL */
         .profile-card { 
             background: var(--card); border-radius: 20px; padding: 20px; 
             border: 1px solid #2c2c2e; margin-bottom: 20px;
@@ -44,36 +46,40 @@
         .user-info p { margin: 0; font-size: 0.8em; color: #888; }
         .user-info h3 { margin: 2px 0; font-size: 1.2em; color: #fff; }
 
-        /* GRÁFICA DUAL */
         .chart-box { height: 180px; margin: 15px 0; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 10px; }
 
-        /* UNIDADES Y BOTONES */
-        .unit-selector { display: flex; gap: 10px; margin-bottom: 15px; }
-        .unit-btn { flex: 1; background: #2c2c2e; border: 1px solid #444; color: white; padding: 8px; border-radius: 10px; font-size: 0.75em; cursor: pointer; }
-        .unit-btn.active { border-color: var(--verde); color: var(--verde); }
+        /* SECCIÓN DE PAGOS */
+        .payment-section { margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; }
+        .payment-title { font-size: 0.7em; color: #888; margin-bottom: 10px; text-align: center; font-weight: bold; }
+        .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        
+        .btn-pay { 
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            text-decoration: none; padding: 10px; border-radius: 12px; font-size: 0.75em; font-weight: bold; color: white;
+        }
+        .btn-ath { background: var(--ath); }
+        .btn-paypal { background: var(--paypal); }
+        .btn-discover { background: #ffffff; color: #000; border: 1px solid #ddd; }
 
-        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { border: none; padding: 12px; border-radius: 12px; font-size: 0.8em; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        /* BOTONES DE ACCIÓN */
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .btn { border: none; padding: 12px; border-radius: 12px; font-size: 0.8em; font-weight: bold; cursor: pointer; }
         .btn-grey { background: #2c2c2e; color: white; }
         .btn-green { background: var(--verde); color: black; }
-        .btn-violet { background: var(--violeta); color: white; }
 
-        /* SECCIONES DE CONTENIDO */
+        /* RUTINA Y LIBRERIA */
         .section-box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #2c2c2e; margin-top: 20px; }
-        .section-title { font-size: 0.8em; font-weight: bold; color: #888; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
-
-        select, input { width: 100%; background: #2c2c2e; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; margin-bottom: 10px; box-sizing: border-box; }
+        .section-title { font-size: 0.8em; font-weight: bold; color: #888; margin-bottom: 15px; text-transform: uppercase; }
+        
+        select, textarea { width: 100%; background: #2c2c2e; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; margin-bottom: 10px; box-sizing: border-box; font-family: inherit; }
 
         .exercise-row { 
             display: flex; align-items: center; justify-content: space-between; 
-            background: #2c2c2e; margin-bottom: 8px; border-radius: 12px; 
-            padding: 12px; border-left: 4px solid var(--verde);
+            background: #2c2c2e; margin-bottom: 8px; border-radius: 12px; padding: 12px; border-left: 4px solid var(--verde);
         }
         .exercise-row.done { opacity: 0.4; border-left-color: #555; }
-        
         .check-box { width: 24px; height: 24px; background: var(--verde); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; cursor: pointer; }
 
-        /* WHATSAPP FOOTER */
         .wa-footer {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 400px; background: var(--verde);
@@ -110,32 +116,30 @@
 
         <div class="chart-box"><canvas id="graficaDual"></canvas></div>
 
-        <div class="unit-selector">
-            <button id="uKg" class="unit-btn active" onclick="setUnidad('kg')">SISTEMA KG</button>
-            <button id="uLb" class="unit-btn" onclick="setUnidad('lb')">SISTEMA LB</button>
+        <div class="payment-section">
+            <div class="payment-title">MÉTODOS DE PAGO DISPONIBLES</div>
+            <div class="payment-grid">
+                <a href="https://athmovil.me/tu-usuario" target="_blank" class="btn-pay btn-ath">📱 ATH Móvil</a>
+                <a href="https://paypal.me/tu-usuario" target="_blank" class="btn-pay btn-paypal">💳 PayPal / Discover</a>
+            </div>
         </div>
 
         <div class="action-grid">
-            <button class="btn btn-grey" onclick="registrarPeso()">REGISTRAR PESO</button>
-            <button class="btn btn-green" onclick="renovarPago()">RENOVAR PAGO</button>
-            <button class="btn btn-grey" onclick="abrirGrasa()">CALCULAR % GRASA</button>
+            <button class="btn btn-grey" onclick="registrarPeso()">PESO</button>
             <button class="btn btn-green" onclick="renovarPago()">RENOVAR MES</button>
         </div>
     </div>
 
     <div class="section-box">
-        <div class="section-title">4 LIBRERIA CUERPO COMPLETO</div>
+        <div class="section-title">LIBRERIA EJERCICIOS</div>
         <select id="selGrupo" onchange="updateEjercicios()">
-            <option value="">Seleccionar Grupo...</option>
+            <option value="">Grupo...</option>
             <option value="Pecho">Pecho</option>
             <option value="Espalda">Espalda</option>
             <option value="Piernas">Piernas</option>
-            <option value="Brazos">Brazos</option>
         </select>
         <select id="selEx"><option value="">Selecciona ejercicio</option></select>
-        <button class="btn btn-violet" onclick="addRutina()" style="width:100%">AÑADIR A MI RUTINA</button>
-        
-        <div id="favs" style="margin-top: 15px; display: flex; gap: 5px; flex-wrap: wrap;"></div>
+        <button class="btn btn-green" onclick="addRutina()" style="width:100%; background: var(--violeta); color: white;">AÑADIR RUTINA</button>
     </div>
 
     <div class="section-box">
@@ -145,8 +149,8 @@
     </div>
 
     <div class="section-box">
-        <div class="section-title">NOTAS DE SESIÓN</div>
-        <textarea id="txtNotas" rows="3" placeholder="Récords, fatiga o sensaciones..." oninput="saveNotas()" style="width:100%; background:#2c2c2e; border:none; border-radius:12px; color:white; padding:10px;"></textarea>
+        <div class="section-title">NOTAS</div>
+        <textarea id="txtNotas" rows="2" placeholder="Notas de hoy..." oninput="saveNotas()"></textarea>
     </div>
 
     <a href="#" class="wa-footer" onclick="sendWA()">
@@ -156,10 +160,9 @@
 
 <script>
     const lib = {
-        "Pecho": ["Press Banca Plano", "Press Inclinado", "Aperturas Manc."],
-        "Espalda": ["Jalón al Pecho", "Remo con Barra", "Dominadas"],
-        "Piernas": ["Sentadillas", "Prensa 45", "Peso Muerto Rumano"],
-        "Brazos": ["Curl Bíceps", "Martillo", "Tríceps Polea"]
+        "Pecho": ["Press Banca", "Press Inclinado", "Aperturas"],
+        "Espalda": ["Jalón Pecho", "Remo Barra", "Dominadas"],
+        "Piernas": ["Sentadillas", "Prensa", "Peso Muerto"]
     };
 
     let db = JSON.parse(localStorage.getItem('trainerElite')) || {
@@ -183,7 +186,6 @@
         updateUI();
         renderRutina();
         renderChart();
-        renderFavs();
     }
 
     function save() { localStorage.setItem('trainerElite', JSON.stringify(db)); }
@@ -199,17 +201,12 @@
         const activo = new Date() < vence;
         document.getElementById('stActivo').className = activo ? 'status-label active-green' : 'status-label';
         document.getElementById('stVencido').className = !activo ? 'status-label active-red' : 'status-label';
-        document.getElementById('uKg').className = db.unidad === 'kg' ? 'unit-btn active' : 'unit-btn';
-        document.getElementById('uLb').className = db.unidad === 'lb' ? 'unit-btn active' : 'unit-btn';
     }
 
-    function setUnidad(u) { db.unidad = u; save(); updateUI(); renderChart(); }
-
     function registrarPeso() {
-        let p = prompt(`Peso actual (${db.unidad}):`);
+        let p = prompt("Peso actual:");
         if(p) {
-            let val = db.unidad === 'lb' ? parseFloat(p) / 2.204 : parseFloat(p);
-            db.logs.push({ f: new Date().toLocaleDateString(), p: val, g: db.logs.length ? db.logs[db.logs.length-1].g : 0 });
+            db.logs.push({ f: new Date().toLocaleDateString(), p: parseFloat(p) });
             save(); renderChart();
         }
     }
@@ -221,23 +218,9 @@
         if(g) lib[g].forEach(e => s.innerHTML += `<option value="${e}">${e}</option>`);
     }
 
-    function addRutina(nombre) {
-        const n = nombre || document.getElementById('selEx').value;
-        if(n) {
-            db.rutina.push({ n: n, d: false });
-            db.favs[n] = (db.favs[n] || 0) + 1;
-            save(); renderRutina(); renderFavs();
-        }
-    }
-
-    function renderFavs() {
-        const container = document.getElementById('favs'); container.innerHTML = '';
-        const sorted = Object.keys(db.favs).sort((a,b) => db.favs[b] - db.favs[a]).slice(0,3);
-        sorted.forEach(f => {
-            const btn = document.createElement('button');
-            btn.className = 'btn btn-grey'; btn.style.fontSize = '0.6em'; btn.innerText = `⭐ ${f}`;
-            btn.onclick = () => addRutina(f); container.appendChild(btn);
-        });
+    function addRutina() {
+        const n = document.getElementById('selEx').value;
+        if(n) { db.rutina.push({ n: n, d: false }); save(); renderRutina(); }
     }
 
     function renderRutina() {
@@ -245,19 +228,15 @@
         db.rutina.forEach((ex, i) => {
             cont.innerHTML += `
                 <div class="exercise-row ${ex.d ? 'done' : ''}">
-                    <span style="font-size:0.85em">${i+1}. ${ex.n}</span>
-                    <div style="display:flex; gap:10px">
-                        <div class="check-box" onclick="toggle(${i})">${ex.d ? '✓' : ''}</div>
-                        <span onclick="del(${i})" style="cursor:pointer">🗑️</span>
-                    </div>
+                    <span>${i+1}. ${ex.n}</span>
+                    <div class="check-box" onclick="toggle(${i})">${ex.d ? '✓' : ''}</div>
                 </div>`;
         });
     }
 
     function toggle(i) { db.rutina[i].d = !db.rutina[i].d; save(); renderRutina(); }
-    function del(i) { if(confirm("¿Eliminar?")) { db.rutina.splice(i, 1); save(); renderRutina(); } }
-    function reiniciarSemana() { if(confirm("¿Reiniciar checks?")) { db.rutina.forEach(e => e.d = false); save(); renderRutina(); } }
-    function saveNotas() { db.notas = document.getElementById('txtNotas').value; save(); }
+    function reiniciarSemana() { if(confirm("¿Reiniciar?")) { db.rutina.forEach(e => e.d = false); save(); renderRutina(); } }
+    function saveNotas() { db.notes = document.getElementById('txtNotas').value; save(); }
 
     function renderChart() {
         const ctx = document.getElementById('graficaDual').getContext('2d');
@@ -267,16 +246,16 @@
             data: {
                 labels: db.logs.map(l => l.f),
                 datasets: [{
-                    label: 'Peso', data: db.logs.map(l => (db.unidad==='lb'?l.p*2.204:l.p).toFixed(1)),
+                    label: 'Peso', data: db.logs.map(l => l.p),
                     borderColor: '#63d67e', tension: 0.4, fill: true, backgroundColor: 'rgba(99, 214, 126, 0.1)'
                 }]
             },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false }, ticks: { color: '#555', font: { size: 8 } } } } }
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false } } } }
         });
     }
 
     function renovarPago() {
-        if(confirm("¿Confirmar renovación de 30 días?")) {
+        if(confirm("¿Renovar 30 días?")) {
             let v = new Date(); v.setDate(v.getDate() + 30);
             db.vence = v.toISOString(); save(); updateUI();
         }
@@ -285,19 +264,13 @@
     function sendWA() {
         const v = new Date(db.vence);
         const dias = Math.ceil((v - new Date()) / (1000*60*60*24));
-        const statusMsg = dias <= 0 ? "⚠️ PAGO VENCIDO" : `📅 Vence en: ${dias} días`;
-        const lastP = db.logs.length ? (db.unidad==='lb'?db.logs[db.logs.length-1].p*2.204:db.logs[db.logs.length-1].p).toFixed(1) : "0";
-        
-        const text = `💪 *REPORTE FIT: ${db.nombre}*\n` +
-                     `⚖️ Peso: ${lastP} ${db.unidad}\n` +
-                     `✅ Rutina: ${db.rutina.filter(e=>e.d).length}/${db.rutina.length}\n` +
-                     `📝 Notas: ${db.notas || 'Sin novedades'}\n` +
-                     `---------------------------\n` +
-                     `${statusMsg}`;
+        const text = `💪 *REPORTE FIT: ${db.nombre}*\n✅ Rutina: ${db.rutina.filter(e=>e.d).length}/${db.rutina.length}\n📅 Estado: ${dias > 0 ? 'Activo' : 'Vencido'}`;
         window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
     }
 
     init();
 </script>
 </body>
+</html>
+
 </html>
