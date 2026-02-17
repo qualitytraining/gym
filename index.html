@@ -19,85 +19,92 @@
         
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background-color: var(--bg); color: var(--text); margin: 0; padding: 15px; padding-bottom: 120px; 
+            background-color: var(--bg); color: var(--text); margin: 0; padding: 10px; padding-bottom: 120px; 
         }
 
         .container { max-width: 450px; margin: auto; }
 
-        /* 1. CUADRO PARA EL LOGO ARRIBA */
+        /* --- 1. CUADRO DEL LOGO (MÁS GRANDE Y PRO) --- */
         .brand-header {
             text-align: center;
-            padding: 20px 0;
-            background: linear-gradient(to bottom, #1c1c1e, transparent);
-            border-radius: 0 0 30px 30px;
-            margin-bottom: 25px;
+            padding: 25px 0;
+            background: linear-gradient(to bottom, #1c1c1e, #121212);
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #2c2c2e;
         }
         .app-logo-brand {
-            width: 120px; /* Tamaño del logo arriba */
+            width: 180px; /* Aumentado de 120px a 180px */
             height: auto;
-            filter: drop-shadow(0 0 8px var(--verde));
+            max-height: 100px;
+            object-fit: contain;
+            /* Efecto de brillo suave para que resalte */
+            filter: drop-shadow(0 0 12px rgba(99, 214, 126, 0.3));
         }
 
-        /* 2. FOTO DEL CLIENTE (MÁS ABAJO) */
+        /* --- 2. FOTO DEL CLIENTE --- */
         .profile-card { 
-            background: var(--card); border-radius: 20px; padding: 20px; 
-            border: 1px solid #2c2c2e; margin-bottom: 20px;
+            background: var(--card); border-radius: 25px; padding: 20px; 
+            border: 1px solid #2c2c2e; margin-bottom: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .profile-header { display: flex; gap: 15px; align-items: center; position: relative; }
         
         .client-photo-box { 
-            position: relative; width: 70px; height: 70px; cursor: pointer; 
+            position: relative; width: 65px; height: 65px; cursor: pointer; 
         }
         .client-img { 
             width: 100%; height: 100%; border-radius: 50%; object-fit: cover; 
-            border: 2px solid #333; background: #222; 
+            border: 2px solid #333; background: #000; 
         }
         .photo-label { 
             position: absolute; bottom: -5px; width: 100%; text-align: center; 
             font-size: 0.5em; background: var(--verde); color: black; 
-            border-radius: 5px; font-weight: bold; 
+            border-radius: 5px; font-weight: bold; padding: 1px 0;
         }
 
         .status-badge { 
             position: absolute; right: 0; top: 0; background: var(--verde); 
-            color: black; font-size: 0.6em; font-weight: bold; padding: 4px 10px; border-radius: 10px; 
+            color: black; font-size: 0.6em; font-weight: bold; padding: 5px 12px; border-radius: 12px; 
         }
 
-        .user-info h3 { margin: 5px 0 2px 0; font-size: 1.2em; text-transform: uppercase; }
-        .user-info p { margin: 0; font-size: 0.75em; color: #888; }
+        .user-info h3 { margin: 2px 0; font-size: 1.1em; text-transform: uppercase; color: #fff; }
+        .user-info p { margin: 0; font-size: 0.7em; color: #888; }
 
         /* GRÁFICA Y BOTONES */
-        .chart-box { height: 160px; margin: 15px 0; }
+        .chart-box { height: 150px; margin: 15px 0; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 5px; }
         .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { border: none; padding: 14px; border-radius: 12px; font-size: 0.8em; font-weight: bold; cursor: pointer; }
+        .btn { border: none; padding: 15px; border-radius: 15px; font-size: 0.85em; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn:active { transform: scale(0.96); }
         .btn-grey { background: #2c2c2e; color: white; }
         .btn-green { background: var(--verde); color: black; }
 
-        .exercise-row { display: flex; align-items: center; justify-content: space-between; background: #2c2c2e; margin-bottom: 8px; border-radius: 12px; padding: 14px; }
-        .check-box { width: 26px; height: 26px; background: var(--verde); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; }
+        .exercise-row { display: flex; align-items: center; justify-content: space-between; background: #2c2c2e; margin-bottom: 8px; border-radius: 14px; padding: 15px; border-left: 4px solid var(--verde); }
+        .check-box { width: 28px; height: 28px; border: 2px solid var(--verde); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--verde); font-weight: bold; }
+        .check-box.done { background: var(--verde); color: black; }
 
-        .wa-footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: var(--verde); padding: 18px; border-radius: 20px; display: flex; justify-content: center; color: black; font-weight: bold; text-decoration: none; z-index: 1000; }
+        .wa-footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: var(--verde); padding: 18px; border-radius: 22px; display: flex; justify-content: center; color: black; font-weight: bold; text-decoration: none; z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="brand-header">
-        <img src="MiLogoPro.png" class="app-logo-brand" onerror="this.src='https://via.placeholder.com/120x40?text=TU+MARCA'">
+        <img src="MiLogoPro.png" class="app-logo-brand" onerror="this.src='https://via.placeholder.com/200x60?text=MI+LOGO+AQUÍ'">
     </div>
 
     <div class="profile-card">
         <div class="profile-header">
             <div class="client-photo-box" onclick="document.getElementById('inputFoto').click()">
                 <img id="displayFotoCliente" src="https://via.placeholder.com/150?text=Atleta" class="client-img">
-                <div class="photo-label">CAMBIAR</div>
+                <div class="photo-label">EDITAR</div>
                 <input type="file" id="inputFoto" hidden accept="image/*" onchange="uploadPhoto(event)">
             </div>
             <div class="user-info">
-                <p>Bienvenido,</p>
+                <p>ATLETA ELITE:</p>
                 <h3 id="labelNombre">-</h3>
-                <p id="labelDetalles">Cargando perfil...</p>
+                <p id="labelDetalles">Plan VIP Personalizado</p>
             </div>
             <div id="statusBadge" class="status-badge">ACTIVO</div>
         </div>
@@ -105,37 +112,37 @@
         <div class="chart-box"><canvas id="graficaDual"></canvas></div>
 
         <div class="action-grid">
-            <button class="btn btn-grey" onclick="addPeso()">+ PESO</button>
-            <button class="btn btn-green" onclick="renovar()">RENOVAR</button>
+            <button class="btn btn-grey" onclick="addPeso()">+ REGISTRAR PESO</button>
+            <button class="btn btn-green" onclick="renovar()">PAGAR MES</button>
         </div>
     </div>
 
     <div class="profile-card" style="padding: 15px;">
-        <p style="font-size: 0.7em; color: #888; margin-top: 0;">MI RUTINA:</p>
+        <p style="font-size: 0.65em; font-weight: bold; color: var(--verde); margin: 0 0 10px 5px; letter-spacing: 1px;">CHECKLIST DIARIO:</p>
         <div id="listaRutina"></div>
     </div>
 
-    <a href="#" class="wa-footer" onclick="sendWA()">ENVIAR REPORTE AL COACH 📱</a>
+    <a href="#" class="wa-footer" onclick="sendWA()">REPORTAR AL COACH 📱</a>
 </div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('trainerV8')) || {
-        nombre: "", logs: [], rutina: [{n:"Entrenamiento hoy",d:false}], foto: ""
+    let db = JSON.parse(localStorage.getItem('trainerV9')) || {
+        nombre: "", logs: [], rutina: [{n:"Entrenamiento Completado",d:false}, {n:"Plan Nutricional OK",d:false}], foto: ""
     };
 
     function init() {
         if(!db.nombre) {
-            db.nombre = prompt("Nombre del Atleta:");
+            db.nombre = prompt("¿Cómo se llama el atleta?");
+            if(!db.nombre) db.nombre = "Invitado";
             save();
         }
         document.getElementById('labelNombre').innerText = db.nombre;
-        document.getElementById('labelDetalles').innerText = "Plan: Personalizado | 30 días";
         if(db.foto) document.getElementById('displayFotoCliente').src = db.foto;
         renderRutina();
         renderChart();
     }
 
-    function save() { localStorage.setItem('trainerV8', JSON.stringify(db)); }
+    function save() { localStorage.setItem('trainerV9', JSON.stringify(db)); }
 
     function uploadPhoto(e) {
         const reader = new FileReader();
@@ -150,7 +157,11 @@
     function renderRutina() {
         const cont = document.getElementById('listaRutina'); cont.innerHTML = '';
         db.rutina.forEach((ex, i) => {
-            cont.innerHTML += `<div class="exercise-row"><span>${ex.n}</span><div class="check-box" onclick="toggle(${i})">${ex.d ? '✓' : ''}</div></div>`;
+            cont.innerHTML += `
+                <div class="exercise-row" onclick="toggle(${i})">
+                    <span style="font-size: 0.9em; font-weight: 500;">${ex.n}</span>
+                    <div class="check-box ${ex.d ? 'done' : ''}">${ex.d ? '✓' : ''}</div>
+                </div>`;
         });
     }
 
@@ -158,24 +169,47 @@
 
     function renderChart() {
         const ctx = document.getElementById('graficaDual').getContext('2d');
-        new Chart(ctx, {
+        if(window.myChart) window.myChart.destroy();
+        window.myChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: db.logs.map(l => l.f),
-                datasets: [{ label: 'Peso', data: db.logs.map(l => l.p), borderColor: '#63d67e', tension: 0.4 }]
+                datasets: [{ 
+                    label: 'Peso', 
+                    data: db.logs.map(l => l.p), 
+                    borderColor: '#63d67e', 
+                    backgroundColor: 'rgba(99, 214, 126, 0.1)',
+                    fill: true,
+                    tension: 0.4 
+                }]
             },
-            options: { responsive: true, maintainAspectRatio: false, scales: { y: { display: false }, x: { display: false } } }
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false, 
+                plugins: { legend: { display: false } },
+                scales: { 
+                    y: { display: false }, 
+                    x: { ticks: { color: '#444', font: { size: 8 } }, grid: { display: false } } 
+                } 
+            }
         });
     }
 
     function addPeso() {
-        let p = prompt("Peso actual:");
-        if(p) { db.logs.push({ f: new Date().toLocaleDateString(), p: parseFloat(p) }); save(); renderChart(); }
+        let p = prompt("Introduce el peso de hoy:");
+        if(p) { 
+            db.logs.push({ f: new Date().toLocaleDateString('es-ES', {day:'2-digit', month:'short'}), p: parseFloat(p) }); 
+            save(); 
+            renderChart(); 
+        }
     }
 
-    function renovar() { alert("Solicitud de renovación enviada"); }
+    function renovar() { window.open('https://athmovil.me/tu-usuario'); }
 
-    function sendWA() { window.open(`https://wa.me/?text=Hola Coach, mi peso hoy es ${db.logs[db.logs.length-1]?.p || '--'}`); }
+    function sendWA() { 
+        const peso = db.logs.length ? db.logs[db.logs.length-1].p : 'N/A';
+        window.open(`https://wa.me/?text=Hola Coach! Soy ${db.nombre}. Mi peso de hoy es ${peso}kg.`); 
+    }
 
     init();
 </script>
