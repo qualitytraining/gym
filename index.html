@@ -19,197 +19,176 @@
         
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background-color: var(--bg); color: var(--text); margin: 0; padding: 10px; padding-bottom: 120px; 
+            background-color: var(--bg); color: var(--text); margin: 0; padding: 0; padding-bottom: 120px; 
         }
 
-        .container { max-width: 450px; margin: auto; }
+        .container { max-width: 450px; margin: auto; padding: 15px; }
 
-        /* --- 1. CUADRO DEL LOGO (MÁS GRANDE Y PRO) --- */
-        .brand-header {
+        /* --- LOGO GRANDE ARRIBA --- */
+        .brand-section {
+            width: 100%;
+            padding: 30px 0;
+            background: #1c1c1e;
             text-align: center;
-            padding: 25px 0;
-            background: linear-gradient(to bottom, #1c1c1e, #121212);
-            border-radius: 0 0 40px 40px;
+            border-bottom: 2px solid var(--verde);
             margin-bottom: 20px;
-            border-bottom: 1px solid #2c2c2e;
         }
         .app-logo-brand {
-            width: 180px; /* Aumentado de 120px a 180px */
+            width: 220px; /* Tamaño imponente */
             height: auto;
-            max-height: 100px;
+            max-height: 120px;
             object-fit: contain;
-            /* Efecto de brillo suave para que resalte */
-            filter: drop-shadow(0 0 12px rgba(99, 214, 126, 0.3));
         }
 
-        /* --- 2. FOTO DEL CLIENTE --- */
-        .profile-card { 
-            background: var(--card); border-radius: 25px; padding: 20px; 
-            border: 1px solid #2c2c2e; margin-bottom: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        /* --- TARJETA DE PERFIL --- */
+        .card { 
+            background: var(--card); 
+            border-radius: 20px; 
+            padding: 20px; 
+            margin-bottom: 20px;
+            border: 1px solid #2c2c2e;
         }
 
         .profile-header { display: flex; gap: 15px; align-items: center; position: relative; }
         
         .client-photo-box { 
-            position: relative; width: 65px; height: 65px; cursor: pointer; 
+            position: relative; width: 60px; height: 60px; cursor: pointer; 
         }
         .client-img { 
             width: 100%; height: 100%; border-radius: 50%; object-fit: cover; 
-            border: 2px solid #333; background: #000; 
-        }
-        .photo-label { 
-            position: absolute; bottom: -5px; width: 100%; text-align: center; 
-            font-size: 0.5em; background: var(--verde); color: black; 
-            border-radius: 5px; font-weight: bold; padding: 1px 0;
+            border: 2px solid #333; 
         }
 
-        .status-badge { 
-            position: absolute; right: 0; top: 0; background: var(--verde); 
-            color: black; font-size: 0.6em; font-weight: bold; padding: 5px 12px; border-radius: 12px; 
+        .user-info h3 { margin: 0; font-size: 1.1em; color: var(--verde); }
+        .user-info p { margin: 2px 0 0 0; font-size: 0.75em; color: #888; }
+
+        /* --- GRÁFICA --- */
+        .chart-container { height: 180px; width: 100%; margin: 15px 0; }
+
+        /* --- BOTONES --- */
+        .grid-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn { 
+            border: none; padding: 15px; border-radius: 12px; 
+            font-size: 0.8em; font-weight: bold; cursor: pointer;
+            text-align: center; text-decoration: none;
         }
-
-        .user-info h3 { margin: 2px 0; font-size: 1.1em; text-transform: uppercase; color: #fff; }
-        .user-info p { margin: 0; font-size: 0.7em; color: #888; }
-
-        /* GRÁFICA Y BOTONES */
-        .chart-box { height: 150px; margin: 15px 0; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 5px; }
-        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { border: none; padding: 15px; border-radius: 15px; font-size: 0.85em; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .btn:active { transform: scale(0.96); }
         .btn-grey { background: #2c2c2e; color: white; }
         .btn-green { background: var(--verde); color: black; }
 
-        .exercise-row { display: flex; align-items: center; justify-content: space-between; background: #2c2c2e; margin-bottom: 8px; border-radius: 14px; padding: 15px; border-left: 4px solid var(--verde); }
-        .check-box { width: 28px; height: 28px; border: 2px solid var(--verde); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--verde); font-weight: bold; }
-        .check-box.done { background: var(--verde); color: black; }
+        /* --- RUTINA --- */
+        .routine-item { 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: #2c2c2e; padding: 15px; margin-bottom: 8px; border-radius: 12px;
+        }
+        .check { width: 25px; height: 25px; border: 2px solid var(--verde); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+        .check.active { background: var(--verde); color: black; }
 
-        .wa-footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: var(--verde); padding: 18px; border-radius: 22px; display: flex; justify-content: center; color: black; font-weight: bold; text-decoration: none; z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        /* --- WHATSAPP --- */
+        .wa-float { 
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
+            width: 90%; max-width: 400px; background: var(--verde); color: black;
+            padding: 18px; border-radius: 15px; text-align: center; font-weight: bold;
+            text-decoration: none; z-index: 999;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="brand-header">
-        <img src="MiLogoPro.png" class="app-logo-brand" onerror="this.src='https://via.placeholder.com/200x60?text=MI+LOGO+AQUÍ'">
+    <div class="brand-section">
+        <img src="MiLogoPro.png" class="app-logo-brand" onerror="this.src='https://via.placeholder.com/220x80?text=LOGO+AQUÍ'">
     </div>
 
-    <div class="profile-card">
-        <div class="profile-header">
-            <div class="client-photo-box" onclick="document.getElementById('inputFoto').click()">
-                <img id="displayFotoCliente" src="https://via.placeholder.com/150?text=Atleta" class="client-img">
-                <div class="photo-label">EDITAR</div>
-                <input type="file" id="inputFoto" hidden accept="image/*" onchange="uploadPhoto(event)">
+    <div class="container">
+        
+        <div class="card">
+            <div class="profile-header">
+                <div class="client-photo-box" onclick="document.getElementById('fileIn').click()">
+                    <img id="cFoto" src="https://via.placeholder.com/100?text=+" class="client-img">
+                    <input type="file" id="fileIn" hidden accept="image/*" onchange="upFoto(event)">
+                </div>
+                <div class="user-info">
+                    <p>Atleta Elite:</p>
+                    <h3 id="cNombre">Cargando...</h3>
+                </div>
             </div>
-            <div class="user-info">
-                <p>ATLETA ELITE:</p>
-                <h3 id="labelNombre">-</h3>
-                <p id="labelDetalles">Plan VIP Personalizado</p>
+
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
             </div>
-            <div id="statusBadge" class="status-badge">ACTIVO</div>
+
+            <div class="grid-btns">
+                <button class="btn btn-grey" onclick="addP()">+ PESO</button>
+                <button class="btn btn-green" onclick="renov()">PAGAR</button>
+            </div>
         </div>
 
-        <div class="chart-box"><canvas id="graficaDual"></canvas></div>
-
-        <div class="action-grid">
-            <button class="btn btn-grey" onclick="addPeso()">+ REGISTRAR PESO</button>
-            <button class="btn btn-green" onclick="renovar()">PAGAR MES</button>
+        <div class="card">
+            <p style="font-size: 0.7em; color: var(--verde); margin-top:0;">MI PROGRESO DIARIO:</p>
+            <div id="rutinaCont"></div>
         </div>
+
     </div>
 
-    <div class="profile-card" style="padding: 15px;">
-        <p style="font-size: 0.65em; font-weight: bold; color: var(--verde); margin: 0 0 10px 5px; letter-spacing: 1px;">CHECKLIST DIARIO:</p>
-        <div id="listaRutina"></div>
-    </div>
-
-    <a href="#" class="wa-footer" onclick="sendWA()">REPORTAR AL COACH 📱</a>
-</div>
+    <a href="#" class="wa-float" onclick="enviarWA()">ENVIAR REPORTE AL COACH 📱</a>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('trainerV9')) || {
-        nombre: "", logs: [], rutina: [{n:"Entrenamiento Completado",d:false}, {n:"Plan Nutricional OK",d:false}], foto: ""
+    let db = JSON.parse(localStorage.getItem('trainerV10')) || {
+        nombre: "", peso: [], items: [{n:"Entrenamiento",d:false},{n:"Dieta",d:false}], foto: ""
     };
 
     function init() {
         if(!db.nombre) {
-            db.nombre = prompt("¿Cómo se llama el atleta?");
-            if(!db.nombre) db.nombre = "Invitado";
+            db.nombre = prompt("Nombre del cliente:");
             save();
         }
-        document.getElementById('labelNombre').innerText = db.nombre;
-        if(db.foto) document.getElementById('displayFotoCliente').src = db.foto;
-        renderRutina();
-        renderChart();
+        document.getElementById('cNombre').innerText = db.nombre;
+        if(db.foto) document.getElementById('cFoto').src = db.foto;
+        drawChart();
+        drawRoutine();
     }
 
-    function save() { localStorage.setItem('trainerV9', JSON.stringify(db)); }
+    function save() { localStorage.setItem('trainerV10', JSON.stringify(db)); }
 
-    function uploadPhoto(e) {
-        const reader = new FileReader();
-        reader.onload = () => { 
-            db.foto = reader.result; 
-            document.getElementById('displayFotoCliente').src = reader.result; 
-            save(); 
-        };
-        reader.readAsDataURL(e.target.files[0]);
+    function upFoto(e) {
+        const r = new FileReader();
+        r.onload = () => { db.foto = r.result; document.getElementById('cFoto').src = r.result; save(); };
+        r.readAsDataURL(e.target.files[0]);
     }
 
-    function renderRutina() {
-        const cont = document.getElementById('listaRutina'); cont.innerHTML = '';
-        db.rutina.forEach((ex, i) => {
-            cont.innerHTML += `
-                <div class="exercise-row" onclick="toggle(${i})">
-                    <span style="font-size: 0.9em; font-weight: 500;">${ex.n}</span>
-                    <div class="check-box ${ex.d ? 'done' : ''}">${ex.d ? '✓' : ''}</div>
+    function drawRoutine() {
+        const c = document.getElementById('rutinaCont'); c.innerHTML = '';
+        db.items.forEach((it, i) => {
+            c.innerHTML += `
+                <div class="routine-item" onclick="tog(${i})">
+                    <span>${it.n}</span>
+                    <div class="check ${it.d ? 'active' : ''}">${it.d ? '✓' : ''}</div>
                 </div>`;
         });
     }
 
-    function toggle(i) { db.rutina[i].d = !db.rutina[i].d; save(); renderRutina(); }
+    function tog(i) { db.items[i].d = !db.items[i].d; save(); drawRoutine(); }
 
-    function renderChart() {
-        const ctx = document.getElementById('graficaDual').getContext('2d');
-        if(window.myChart) window.myChart.destroy();
-        window.myChart = new Chart(ctx, {
+    function addP() {
+        let p = prompt("Peso:");
+        if(p) { db.peso.push({f: new Date().toLocaleDateString(), v: parseFloat(p)}); save(); drawChart(); }
+    }
+
+    function drawChart() {
+        const ctx = document.getElementById('myChart').getContext('2d');
+        if(window.ch) window.ch.destroy();
+        window.ch = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: db.logs.map(l => l.f),
-                datasets: [{ 
-                    label: 'Peso', 
-                    data: db.logs.map(l => l.p), 
-                    borderColor: '#63d67e', 
-                    backgroundColor: 'rgba(99, 214, 126, 0.1)',
-                    fill: true,
-                    tension: 0.4 
-                }]
+                labels: db.peso.map(x => x.f),
+                datasets: [{ data: db.peso.map(x => x.v), borderColor: '#63d67e', tension: 0.4 }]
             },
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: false, 
-                plugins: { legend: { display: false } },
-                scales: { 
-                    y: { display: false }, 
-                    x: { ticks: { color: '#444', font: { size: 8 } }, grid: { display: false } } 
-                } 
-            }
+            options: { responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}} }
         });
     }
 
-    function addPeso() {
-        let p = prompt("Introduce el peso de hoy:");
-        if(p) { 
-            db.logs.push({ f: new Date().toLocaleDateString('es-ES', {day:'2-digit', month:'short'}), p: parseFloat(p) }); 
-            save(); 
-            renderChart(); 
-        }
-    }
+    function renov() { window.open('https://athmovil.me/tu-usuario'); }
 
-    function renovar() { window.open('https://athmovil.me/tu-usuario'); }
-
-    function sendWA() { 
-        const peso = db.logs.length ? db.logs[db.logs.length-1].p : 'N/A';
-        window.open(`https://wa.me/?text=Hola Coach! Soy ${db.nombre}. Mi peso de hoy es ${peso}kg.`); 
-    }
+    function enviarWA() { window.open(`https://wa.me/?text=Reporte de ${db.nombre}`); }
 
     init();
 </script>
