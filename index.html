@@ -27,9 +27,11 @@
 
         .container { max-width: 450px; margin: auto; }
 
-        /* HEADER */
-        .app-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
-        .logo { color: var(--verde); font-weight: bold; font-size: 1.2em; display: flex; align-items: center; gap: 10px; }
+        /* HEADER CON TU LOGO FIJO */
+        .app-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; margin-bottom: 10px; }
+        .brand-container { display: flex; align-items: center; gap: 10px; }
+        .app-logo-main { width: 35px; height: 35px; border-radius: 5px; object-fit: cover; }
+        .logo-text { color: var(--verde); font-weight: bold; font-size: 1.1em; letter-spacing: 1px; }
         .lock-icon { background: #2c2c2e; padding: 8px; border-radius: 10px; cursor: pointer; }
 
         /* TARJETA PERFIL */
@@ -39,8 +41,9 @@
         }
 
         .profile-header { display: flex; gap: 15px; align-items: flex-start; position: relative; }
-        .avatar-box { position: relative; width: 80px; height: 80px; }
-        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--verde); background: #000; }
+        .avatar-box { position: relative; width: 70px; height: 70px; cursor: pointer; }
+        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #333; background: #000; }
+        .avatar-label { position: absolute; bottom: -5px; width: 100%; text-align: center; font-size: 0.5em; background: var(--verde); color: black; border-radius: 5px; font-weight: bold; }
         
         .status-container { position: absolute; right: 0; top: 0; display: flex; background: #2c2c2e; padding: 3px; border-radius: 20px; }
         .status-label { padding: 4px 12px; border-radius: 15px; font-size: 0.65em; font-weight: bold; color: #555; }
@@ -48,71 +51,62 @@
         .status-label.active-red { background: #e74c3c; color: white; }
 
         .user-info p { margin: 0; font-size: 0.8em; color: #888; }
-        .user-info h3 { margin: 2px 0; font-size: 1.3em; color: #fff; text-transform: uppercase; }
+        .user-info h3 { margin: 2px 0; font-size: 1.2em; color: #fff; text-transform: uppercase; }
 
         .chart-box { height: 180px; margin: 15px 0; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 10px; }
 
-        /* SECCIÓN DE PAGOS */
+        /* PAGOS */
         .payment-section { margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; }
-        .payment-title { font-size: 0.7em; color: var(--verde); margin-bottom: 10px; text-align: center; font-weight: bold; letter-spacing: 1px; }
+        .payment-title { font-size: 0.7em; color: var(--verde); margin-bottom: 10px; text-align: center; font-weight: bold; }
         .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        
-        .btn-pay { 
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            text-decoration: none; padding: 12px; border-radius: 12px; font-size: 0.75em; font-weight: bold; color: white;
-        }
+        .btn-pay { display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; padding: 12px; border-radius: 12px; font-size: 0.75em; font-weight: bold; color: white; }
         .btn-ath { background: var(--ath); }
         .btn-paypal { background: var(--paypal); }
 
-        /* ACCIONES */
+        /* BOTONES */
         .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
         .btn { border: none; padding: 14px; border-radius: 12px; font-size: 0.8em; font-weight: bold; cursor: pointer; }
         .btn-grey { background: #2c2c2e; color: white; }
         .btn-green { background: var(--verde); color: black; }
 
-        /* MODAL CALCULADORA */
-        .modal {
-            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.9); align-items: center; justify-content: center; backdrop-filter: blur(5px);
-        }
+        /* MODAL */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background: var(--card); padding: 25px; border-radius: 25px; width: 85%; max-width: 380px; border: 1px solid var(--verde); }
 
-        /* SECCIONES CONTENIDO */
+        /* RUTINA */
         .section-box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid #2c2c2e; margin-top: 20px; }
         .section-title { font-size: 0.8em; font-weight: bold; color: #888; margin-bottom: 15px; text-transform: uppercase; border-left: 3px solid var(--verde); padding-left: 10px; }
         
         select, textarea, input { width: 100%; background: #2c2c2e; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; margin-bottom: 10px; box-sizing: border-box; font-family: inherit; }
 
-        .exercise-row { display: flex; align-items: center; justify-content: space-between; background: #2c2c2e; margin-bottom: 8px; border-radius: 12px; padding: 14px; border-left: 4px solid var(--verde); }
-        .exercise-row.done { opacity: 0.3; filter: grayscale(1); }
+        .exercise-row { display: flex; align-items: center; justify-content: space-between; background: #2c2c2e; margin-bottom: 8px; border-radius: 12px; padding: 14px; }
         .check-box { width: 28px; height: 28px; background: var(--verde); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; cursor: pointer; }
 
-        .wa-footer {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 400px; background: var(--verde);
-            padding: 18px; border-radius: 20px; display: flex; justify-content: center;
-            align-items: center; gap: 10px; color: black; font-weight: bold;
-            text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.6); z-index: 1000;
-        }
+        .wa-footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: var(--verde); padding: 18px; border-radius: 20px; display: flex; justify-content: center; align-items: center; gap: 10px; color: black; font-weight: bold; text-decoration: none; z-index: 1000; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="app-header">
-        <div class="logo"><span>☰</span> PRO TRAINER ELITE</div>
+        <div class="brand-container">
+            <img src="MiLogoPro.png" class="app-logo-main" onerror="this.src='https://via.placeholder.com/50?text=P'">
+            <div class="logo-text">PRO TRAINER ELITE</div>
+        </div>
         <div class="lock-icon" onclick="location.reload()">🔒</div>
     </div>
 
     <div class="profile-card">
         <div class="profile-header">
-            <div class="avatar-box">
-                <img id="fotoPerfil" src="./MiLogoPro.png" onerror="this.src='https://via.placeholder.com/150?text=Logo+Error'" class="avatar-img">
+            <div class="avatar-box" onclick="document.getElementById('inputFoto').click()">
+                <img id="fotoCliente" src="https://via.placeholder.com/150?text=Atleta" class="avatar-img">
+                <div class="avatar-label">CAMBIAR</div>
+                <input type="file" id="inputFoto" hidden accept="image/*" onchange="subirFoto(event)">
             </div>
             <div class="user-info">
                 <p>Atleta:</p>
                 <h3 id="labelNombre">-</h3>
-                <p id="labelMeta" style="font-size: 0.7em; color: var(--verde);">Cargando perfil...</p>
+                <p id="labelMeta" style="font-size: 0.7em; color: var(--verde);">Cargando...</p>
             </div>
             <div class="status-container">
                 <div id="stActivo" class="status-label">ACTIVO</div>
@@ -138,7 +132,7 @@
     </div>
 
     <div class="section-box">
-        <div class="section-title">MI RUTINA DIARIA</div>
+        <div class="section-title">MI RUTINA</div>
         <div id="listaRutina"></div>
         <button class="btn btn-grey" onclick="reiniciarSemana()" style="width:100%; margin-top:10px; font-size:0.7em;">REINICIAR CHECKS</button>
     </div>
@@ -154,14 +148,14 @@
         <input type="number" id="cin" placeholder="Cintura (cm)">
         <input type="number" id="cue" placeholder="Cuello (cm)">
         <input type="number" id="alt" placeholder="Altura (cm)">
-        <button class="btn btn-green" style="width:100%" onclick="calcularGrasa()">GUARDAR DATOS</button>
+        <button class="btn btn-green" style="width:100%" onclick="calcularGrasa()">GUARDAR</button>
         <button class="btn btn-grey" style="width:100%; margin-top:10px" onclick="document.getElementById('modalGrasa').style.display='none'">CERRAR</button>
     </div>
 </div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('trainerEliteV5')) || {
-        nombre: "", edad: "", inicio: "", vence: "", logs: [], rutina: [{n:"Sentadillas",d:false},{n:"Press Banca",d:false}], notas: ""
+    let db = JSON.parse(localStorage.getItem('trainerEliteV6')) || {
+        nombre: "", edad: "", inicio: "", vence: "", logs: [], rutina: [{n:"Sentadillas",d:false},{n:"Press Banca",d:false}], foto: ""
     };
     let chart;
 
@@ -176,12 +170,19 @@
         }
         document.getElementById('labelNombre').innerText = db.nombre;
         document.getElementById('labelMeta').innerText = `Edad: ${db.edad} | Miembro desde: ${db.inicio}`;
+        if(db.foto) document.getElementById('fotoCliente').src = db.foto;
         updateUI();
         renderRutina();
         renderChart();
     }
 
-    function save() { localStorage.setItem('trainerEliteV5', JSON.stringify(db)); }
+    function save() { localStorage.setItem('trainerEliteV6', JSON.stringify(db)); }
+
+    function subirFoto(e) {
+        const reader = new FileReader();
+        reader.onload = () => { db.foto = reader.result; document.getElementById('fotoCliente').src = reader.result; save(); };
+        reader.readAsDataURL(e.target.files[0]);
+    }
 
     function updateUI() {
         const vence = new Date(db.vence);
@@ -191,11 +192,8 @@
     }
 
     function registrarPeso() {
-        let p = prompt("Peso actual (kg):");
-        if(p) { 
-            db.logs.push({ f: new Date().toLocaleDateString(), p: parseFloat(p), g: db.logs.length ? db.logs[db.logs.length-1].g : 0 }); 
-            save(); renderChart(); 
-        }
+        let p = prompt("Peso (kg):");
+        if(p) { db.logs.push({ f: new Date().toLocaleDateString(), p: parseFloat(p), g: db.logs.length ? db.logs[db.logs.length-1].g : 0 }); save(); renderChart(); }
     }
 
     function abrirGrasa() { document.getElementById('modalGrasa').style.display = 'flex'; }
@@ -216,7 +214,7 @@
     function renderRutina() {
         const cont = document.getElementById('listaRutina'); cont.innerHTML = '';
         db.rutina.forEach((ex, i) => {
-            cont.innerHTML += `<div class="exercise-row ${ex.d ? 'done' : ''}"><span>${ex.n}</span><div class="check-box" onclick="toggle(${i})">${ex.d ? '✓' : ''}</div></div>`;
+            cont.innerHTML += `<div class="exercise-row"><span>${ex.n}</span><div class="check-box" onclick="toggle(${i})">${ex.d ? '✓' : ''}</div></div>`;
         });
     }
 
@@ -240,14 +238,14 @@
     }
 
     function renovarPago() {
-        if(confirm("¿Renovar 30 días de acceso?")) {
+        if(confirm("¿Renovar 30 días?")) {
             let v = new Date(); v.setDate(v.getDate() + 30);
             db.vence = v.toISOString(); save(); updateUI();
         }
     }
 
     function sendWA() {
-        const text = `🔥 *REPORTE PRO TRAINER*\nAtleta: ${db.nombre}\n✅ Progreso: ${db.rutina.filter(e=>e.d).length}/${db.rutina.length}`;
+        const text = `🔥 REPORTE: ${db.nombre}`;
         window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
     }
 
