@@ -3,260 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Trainer Elite</title>
-    
-    <link rel="icon" href="MiLogoPro.png" type="image/png">
-    <link rel="apple-touch-icon" href="MiLogoPro.png">
-
+    <title>Pro Trainer Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        :root { 
-            --verde: #63d67e; 
-            --bg: #121212; 
-            --card: #1c1c1e; 
-            --text: #ffffff; 
-            --dark-grey: #2c2c2e;
-        }
-        
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background-color: var(--bg); color: var(--text); margin: 0; padding: 0; padding-bottom: 100px;
+        :root {
+            --verde: #63d67e;
+            --bg: #1a1a1a;
+            --card: #242424;
+            --border: #333;
+            --text-dim: #a0a0a0;
         }
 
-        .container { max-width: 450px; margin: auto; padding: 10px; }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: white;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
 
-        /* HEADER SUPERIOR */
-        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; }
-        .top-nav .menu-icon { font-size: 1.5em; color: white; cursor: pointer; }
-        .top-nav .app-title { color: var(--verde); font-weight: bold; font-size: 1.2em; }
-        .top-nav .lock-btn { background: var(--dark-grey); padding: 8px; border-radius: 8px; font-size: 0.8em; }
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            background: #121212;
+            border-radius: 30px;
+            padding: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
 
-        /* SECCIÓN DEL LOGO DE TU MARCA (EL CUADRO DE ARRIBA) */
-        .brand-box {
-            background: var(--card);
-            margin: 10px;
-            border-radius: 20px;
-            padding: 20px;
+        /* HEADER */
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5px;
+            margin-bottom: 20px;
+        }
+        .nav-header span { font-size: 1.5em; cursor: pointer; }
+        .nav-header h2 { color: var(--verde); margin: 0; font-size: 1.2em; font-weight: 600; }
+        .lock-box { background: #2a2a2a; padding: 8px 12px; border-radius: 10px; font-size: 0.9em; }
+
+        /* BRANDING AREA (TU LOGO) */
+        .brand-space {
             text-align: center;
-            border: 1px solid #333;
+            margin-bottom: 20px;
         }
-        .brand-box img {
-            width: 200px; /* Tamaño grande para tu logo */
+        .brand-space img {
+            width: 180px;
             height: auto;
-            max-height: 90px;
             object-fit: contain;
         }
 
-        /* DASHBOARD DEL CLIENTE (ESTILO IMAGEN) */
-        .client-card {
+        /* MAIN CARD */
+        .main-card {
             background: var(--card);
-            border-radius: 20px;
-            padding: 15px;
-            margin: 10px;
+            border-radius: 25px;
+            padding: 20px;
+            position: relative;
             border: 1px solid #333;
+            margin-bottom: 20px;
         }
 
-        .client-info-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .profile-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; }
+        .avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--verde); object-fit: cover; }
         
-        .client-profile { display: flex; align-items: center; gap: 12px; }
-        .avatar-circle { 
-            width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--verde); 
-            object-fit: cover; background: #000;
-        }
-        .name-label p { margin: 0; font-size: 0.7em; color: #888; }
-        .name-label h3 { margin: 0; font-size: 1em; color: #fff; }
+        .user-data h4 { margin: 0; font-size: 0.9em; color: white; }
+        .user-data p { margin: 2px 0; font-size: 0.7em; color: var(--text-dim); }
+        .display-name { color: var(--verde); font-size: 1.1em; font-weight: bold; margin-top: 5px; display: block; }
 
-        .status-pill { display: flex; gap: 5px; }
-        .pill { padding: 4px 10px; border-radius: 12px; font-size: 0.6em; font-weight: bold; border: 1px solid #444; color: #444; }
-        .pill.active { background: rgba(99, 214, 126, 0.2); color: var(--verde); border-color: var(--verde); }
-
-        .main-display { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .stat-box { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 10px; font-size: 0.7em; }
-        .chart-mini { height: 100px; width: 100%; }
-
-        /* BOTONES DE ACCIÓN */
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { 
-            border: none; padding: 12px; border-radius: 12px; font-size: 0.7em; 
-            font-weight: bold; cursor: pointer; text-transform: uppercase;
-        }
-        .btn-grey { background: var(--dark-grey); color: #888; }
-        .btn-green { background: var(--verde); color: black; }
-
-        /* LIBRERIA Y RUTINA */
-        .routine-card {
-            background: var(--card);
+        .status-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #333;
             border-radius: 20px;
-            padding: 15px;
-            margin: 10px;
+            display: flex;
+            padding: 2px;
         }
-        .routine-title { font-size: 0.8em; font-weight: bold; color: #fff; margin-bottom: 10px; }
+        .status-toggle span {
+            padding: 4px 12px;
+            font-size: 0.6em;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+        .status-toggle .active-pill { background: #fff; color: #000; }
+        .status-toggle .inactive-pill { color: #666; }
+
+        /* CHART AREA */
+        .chart-section {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .chart-info { width: 40%; font-size: 0.65em; color: var(--text-dim); }
+        .chart-box { width: 60%; height: 100px; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 5px; }
+
+        /* BUTTONS */
+        .btn-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .btn {
+            border: none;
+            padding: 12px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .btn-dark { background: #333; color: #ccc; }
+        .btn-green { background: var(--verde); color: #000; }
+
+        /* LISTA RUTINA */
+        .routine-section {
+            background: var(--card);
+            border-radius: 25px;
+            padding: 20px;
+            border-left: 3px solid var(--verde);
+            border-right: 3px solid #8e44ad;
+        }
+        .routine-header { font-size: 0.8em; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; }
         
-        .select-box { 
-            background: var(--dark-grey); padding: 12px; border-radius: 10px; 
-            margin-bottom: 8px; font-size: 0.8em; color: #888; display: flex; align-items: center; gap: 10px;
+        .select-input {
+            background: #2a2a2a;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 0.8em;
+            color: #888;
+            display: flex;
+            justify-content: space-between;
         }
 
         .exercise-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 0; border-bottom: 1px solid #222; font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 0.8em;
+            border-bottom: 1px solid #333;
         }
-        .exercise-item .index { color: #555; width: 20px; }
-        .exercise-item .check-btn { 
-            width: 24px; height: 24px; border-radius: 6px; border: 1px solid var(--verde);
-            display: flex; align-items: center; justify-content: center; color: var(--verde);
-        }
-        .exercise-item.done { color: #555; }
-        .exercise-item.done .check-btn { background: var(--verde); color: black; }
+        .ex-num { width: 25px; color: #555; }
+        .ex-name { flex-grow: 1; }
+        .ex-check { color: var(--verde); font-size: 1.2em; }
+        .ex-fire { margin-left: 10px; }
 
-        /* BOTÓN WHATSAPP */
-        .wa-btn-container {
-            position: fixed; bottom: 20px; left: 0; width: 100%; display: flex; justify-content: center;
-        }
-        .wa-btn {
-            background: var(--verde); width: 85%; padding: 15px; border-radius: 15px;
-            color: black; font-weight: bold; text-align: center; text-decoration: none;
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        .footer-wa {
+            background: var(--verde);
+            color: black;
+            padding: 15px;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="top-nav">
-        <div class="menu-icon">☰</div>
-        <div class="app-title">Pro Trainer</div>
-        <div class="lock-btn">🔒</div>
+<div class="app-container">
+    <div class="nav-header">
+        <span>≡</span>
+        <h2>Pro Trainer</h2>
+        <div class="lock-box">🔒</div>
     </div>
 
-    <div class="brand-box">
-        <img src="MiLogoPro.png" onerror="this.src='https://via.placeholder.com/200x80?text=MI+LOGO+PRO'">
+    <div class="brand-space">
+        <img src="MiLogoPro.png" onerror="this.src='https://via.placeholder.com/200x60/121212/63d67e?text=TU+LOGO+PRO'">
     </div>
 
-    <div class="client-card">
-        <div class="client-info-row">
-            <div class="client-profile">
-                <img id="cFoto" src="https://via.placeholder.com/100?text=Atleta" class="avatar-circle" onclick="document.getElementById('fileIn').click()">
-                <div class="name-label">
-                    <p>Nombre:</p>
-                    <h3 id="cNombre">Atleta Elite</h3>
-                </div>
-            </div>
-            <div class="status-pill">
-                <div id="stActivo" class="pill active">Activo</div>
-                <div id="stVencido" class="pill">Vencido</div>
-            </div>
+    <div class="main-card">
+        <div class="status-toggle">
+            <span class="active-pill">Activo</span>
+            <span class="inactive-pill">Vencido</span>
         </div>
-
-        <div class="main-display">
-            <div class="stat-box">
-                <p style="color:var(--verde); margin:0;">Gráfica Datos</p>
-                <p style="font-size: 0.8em; margin: 5px 0;">Suscripción activa hasta: <br><span id="fechaVence">--/--</span></p>
-            </div>
-            <div class="stat-box">
-                <canvas id="miniChart" class="chart-mini"></canvas>
-            </div>
-        </div>
-
-        <div class="btn-grid">
-            <button class="btn btn-grey" onclick="addP()">Registrar Peso</button>
-            <button class="btn btn-green" onclick="renov()">Renovar Pago</button>
-            <button class="btn btn-grey" onclick="prompt('Mensaje al Coach:')">Mensaje</button>
-            <button class="btn btn-green" onclick="renov()">Renovar Mes</button>
-        </div>
-    </div>
-
-    <div class="routine-card">
-        <div class="routine-title">LIBRERIA CURSO COMPLETO</div>
-        <div class="select-box"><span>⌵</span> Seleccionar Ejercicio</div>
-        <div class="select-box"><span>⌵</span> Seleccionar Ejercicio</div>
         
-        <p style="font-size: 0.7em; color: #555; margin-top: 15px;">MI RUTINA</p>
-        <div id="listaEjercicios"></div>
+        <div class="profile-row">
+            <img src="https://via.placeholder.com/100" class="avatar" id="atletaFoto">
+            <div class="user-data">
+                <h4>Nombre:</h4>
+                <p>Fecha inicio - 15/02/2026</p>
+                <span class="display-name" id="atletaNombre">Display Nombre</span>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-info">
+                <p style="color:var(--verde)">Grafica de Peso</p>
+                <p>Progreso mensual basado en registros diarios.</p>
+            </div>
+            <div class="chart-box">
+                <canvas id="miniChart"></canvas>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn btn-dark" onclick="alert('Peso registrado')">Registrar Peso</button>
+            <button class="btn btn-green">Renovar Pago</button>
+            <button class="btn btn-dark">Mensaje Coach</button>
+            <button class="btn btn-green">Renovar Mes</button>
+        </div>
     </div>
 
-    <input type="file" id="fileIn" hidden accept="image/*" onchange="upFoto(event)">
-
-    <div class="wa-btn-container">
-        <a href="#" class="wa-btn" onclick="enviarWA()">
-            ENVIAR REPORTE WHATSAPP 📱
-        </a>
+    <div class="routine-section">
+        <div class="routine-header">4 Libreria Curso Completo</div>
+        <div class="select-input"><span>⌵ selectEjercicios</span></div>
+        <div class="select-input"><span>⌵ selectEjercicios</span></div>
+        
+        <p style="font-size: 0.7em; margin: 15px 0 10px 0;">MI Rutina</p>
+        
+        <div class="exercise-item">
+            <span class="ex-num">1</span>
+            <span class="ex-name">Press de Banca Plano</span>
+            <span class="ex-check">✓</span>
+            <span class="ex-fire">🔥</span>
+        </div>
+        <div class="exercise-item">
+            <span class="ex-num">2</span>
+            <span class="ex-name">Press Inclinado mancuerna</span>
+        </div>
+        <div class="exercise-item">
+            <span class="ex-num">4</span>
+            <span class="ex-name">Jalón al Pecho</span>
+        </div>
     </div>
+
+    <a href="#" class="footer-wa">
+        ENVIAR REPORTE WHATSAPP 📱
+    </a>
 </div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('trainerV11')) || {
-        nombre: "", pesos: [], rutina: [
-            {n:"Press de Banca Plano", d:false},
-            {n:"Press Inclinado", d:false},
-            {n:"Jalón al Pecho", d:false},
-            {n:"Sentadilla Libre", d:false}
-        ], foto: ""
-    };
-
-    function init() {
-        if(!db.nombre) {
-            db.nombre = prompt("Nombre del cliente:");
-            save();
+    // Configuración de la gráfica pequeña
+    const ctx = document.getElementById('miniChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [1, 2, 3, 4, 5, 6],
+            datasets: [{
+                data: [10, 15, 8, 25, 18, 22],
+                borderColor: '#63d67e',
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.4
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: { x: { display: false }, y: { display: false } },
+            maintainAspectRatio: false
         }
-        document.getElementById('cNombre').innerText = db.nombre;
-        if(db.foto) document.getElementById('cFoto').src = db.foto;
-        
-        let v = new Date(); v.setDate(v.getDate() + 30);
-        document.getElementById('fechaVence').innerText = v.toLocaleDateString();
+    });
 
-        drawRoutine();
-        drawChart();
+    // Cargar datos locales
+    window.onload = () => {
+        const nombre = prompt("¿Nombre del Atleta?") || "Atleta Pro";
+        document.getElementById('atletaNombre').innerText = nombre;
     }
-
-    function save() { localStorage.setItem('trainerV11', JSON.stringify(db)); }
-
-    function upFoto(e) {
-        const r = new FileReader();
-        r.onload = () => { db.foto = r.result; document.getElementById('cFoto').src = r.result; save(); };
-        r.readAsDataURL(e.target.files[0]);
-    }
-
-    function drawRoutine() {
-        const c = document.getElementById('listaEjercicios'); c.innerHTML = '';
-        db.rutina.forEach((ex, i) => {
-            c.innerHTML += `
-                <div class="exercise-item ${ex.d ? 'done' : ''}" onclick="tog(${i})">
-                    <div style="display:flex; align-items:center;">
-                        <span class="index">${i+1}</span>
-                        <span>${ex.n}</span>
-                    </div>
-                    <div class="check-btn">${ex.d ? '✓' : ''}</div>
-                </div>`;
-        });
-    }
-
-    function tog(i) { db.rutina[i].d = !db.rutina[i].d; save(); drawRoutine(); }
-
-    function addP() {
-        let p = prompt("Introduce tu peso actual:");
-        if(p) { db.pesos.push(parseFloat(p)); save(); drawChart(); }
-    }
-
-    function drawChart() {
-        const ctx = document.getElementById('miniChart').getContext('2d');
-        if(window.ch) window.ch.destroy();
-        window.ch = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: db.pesos.map((_, i) => i),
-                datasets: [{ data: db.pesos, borderColor: '#63d67e', tension: 0.4, pointRadius: 0 }]
-            },
-            options: { responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: { x: {display: false}, y: {display: false} } }
-        });
-    }
-
-    function renov() { window.open('https://athmovil.me/tu-usuario'); }
-
-    function enviarWA() { window.open(`https://wa.me/?text=Reporte de ${db.nombre}`); }
-
-    init();
 </script>
+
 </body>
 </html>
