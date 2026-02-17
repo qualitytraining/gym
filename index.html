@@ -3,194 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Trainer | Dashboard Elite</title>
-    
-    <link rel="icon" href="MiLogoPro.png" type="image/png">
-    <link rel="apple-touch-icon" href="MiLogoPro.png">
-
+    <title>Pro Trainer | Dashboard Premium</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root { 
-            --verde: #63d67e; 
+            --verde: #2ecc71; 
+            --violeta: #8e44ad; 
             --bg: #121212; 
-            --card: #1c1c1e; 
+            --card: #1e1e1e; 
             --text: #ffffff; 
         }
         
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background-color: var(--bg); color: var(--text); margin: 0; padding: 0; padding-bottom: 120px; 
+            font-family: 'Segoe UI', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            padding: 15px; 
+            padding-bottom: 100px; 
         }
 
-        .container { max-width: 450px; margin: auto; padding: 15px; }
+        .container { max-width: 500px; margin: auto; }
 
-        /* --- LOGO GRANDE ARRIBA --- */
-        .brand-section {
-            width: 100%;
-            padding: 30px 0;
-            background: #1c1c1e;
-            text-align: center;
-            border-bottom: 2px solid var(--verde);
-            margin-bottom: 20px;
+        /* SEGURIDAD */
+        #lockScreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 9999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
         }
-        .app-logo-brand {
-            width: 220px; /* Tamaño imponente */
-            height: auto;
-            max-height: 120px;
-            object-fit: contain;
+        .pin-input {
+            background: #252525; border: 2px solid var(--violeta);
+            color: white; font-size: 2.5em; text-align: center;
+            width: 180px; border-radius: 10px; margin-bottom: 20px; letter-spacing: 5px;
         }
 
-        /* --- TARJETA DE PERFIL --- */
-        .card { 
-            background: var(--card); 
-            border-radius: 20px; 
-            padding: 20px; 
-            margin-bottom: 20px;
-            border: 1px solid #2c2c2e;
-        }
-
-        .profile-header { display: flex; gap: 15px; align-items: center; position: relative; }
+        /* HEADER & FOTO PERFIL */
+        .header-app { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .logo-text { color: var(--verde); font-weight: bold; font-size: 1.4em; display: flex; align-items: center; gap: 8px; }
         
-        .client-photo-box { 
-            position: relative; width: 60px; height: 60px; cursor: pointer; 
-        }
-        .client-img { 
-            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; 
-            border: 2px solid #333; 
-        }
+        .profile-section { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; background: var(--card); padding: 15px; border-radius: 15px; border: 1px solid #333; }
+        .avatar-container { position: relative; width: 80px; height: 80px; }
+        .avatar-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--verde); background: #333; cursor: pointer; }
+        .camera-icon { position: absolute; bottom: 0; right: 0; background: var(--verde); color: black; border-radius: 50%; width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; font-size: 0.7em; border: 2px solid var(--bg); }
 
-        .user-info h3 { margin: 0; font-size: 1.1em; color: var(--verde); }
-        .user-info p { margin: 2px 0 0 0; font-size: 0.75em; color: #888; }
+        /* PAGO & GRÁFICA */
+        .status-pill { padding: 4px 12px; border-radius: 20px; font-size: 0.7em; font-weight: bold; text-transform: uppercase; }
+        .activo { background: rgba(46, 204, 113, 0.2); color: var(--verde); border: 1px solid var(--verde); }
+        .vencido { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; }
 
-        /* --- GRÁFICA --- */
-        .chart-container { height: 180px; width: 100%; margin: 15px 0; }
+        .chart-card { background: var(--card); border-radius: 15px; padding: 15px; border: 1px solid #333; margin-bottom: 15px; }
+        .chart-container { height: 200px; margin-top: 10px; }
 
-        /* --- BOTONES --- */
-        .grid-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { 
-            border: none; padding: 15px; border-radius: 12px; 
-            font-size: 0.8em; font-weight: bold; cursor: pointer;
-            text-align: center; text-decoration: none;
-        }
-        .btn-grey { background: #2c2c2e; color: white; }
-        .btn-green { background: var(--verde); color: black; }
+        /* LIBRERIA Y BOTONES */
+        .section-title { font-size: 0.9em; color: #888; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .section-title::before { content: ''; height: 15px; width: 3px; background: var(--verde); display: block; }
 
-        /* --- RUTINA --- */
-        .routine-item { 
-            display: flex; justify-content: space-between; align-items: center; 
-            background: #2c2c2e; padding: 15px; margin-bottom: 8px; border-radius: 12px;
-        }
-        .check { width: 25px; height: 25px; border: 2px solid var(--verde); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
-        .check.active { background: var(--verde); color: black; }
+        select, input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #333; background: #252525; color: white; margin-bottom: 10px; }
+        
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        button { border-radius: 10px; border: none; padding: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-primary { background: var(--verde); color: black; }
+        .btn-secondary { background: #333; color: white; font-size: 0.8em; }
 
-        /* --- WHATSAPP --- */
-        .wa-float { 
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            width: 90%; max-width: 400px; background: var(--verde); color: black;
-            padding: 18px; border-radius: 15px; text-align: center; font-weight: bold;
-            text-decoration: none; z-index: 999;
-        }
+        /* LISTA RUTINA */
+        .exercise-item { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--verde); }
+        .exercise-item.done { opacity: 0.4; border-left-color: #555; }
+        .check-circle { width: 25px; height: 25px; border-radius: 50%; border: 2px solid var(--verde); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .check-circle.checked { background: var(--verde); color: black; }
+
+        .whatsapp-btn { background: #25d366; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; padding: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; border-radius: 15px; color: white; text-decoration: none; font-weight: bold; z-index: 1000; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
     </style>
 </head>
 <body>
 
-    <div class="brand-section">
-        <img src="MiLogoPro.png" class="app-logo-brand" onerror="this.src='https://via.placeholder.com/220x80?text=LOGO+AQUÍ'">
+<div id="lockScreen">
+    <h3 id="lockMsg">🔒 Ingrese PIN</h3>
+    <input type="password" id="pinInput" class="pin-input" maxlength="4" inputmode="numeric">
+    <button onclick="verificarPIN()" style="width: 180px; background: var(--violeta); color:white;">ENTRAR</button>
+</div>
+
+<div class="container" id="mainContent" style="display:none">
+    <div class="header-app">
+        <div class="logo-text"><span>☰</span> Pro Trainer</div>
+        <div onclick="location.reload()" style="cursor:pointer">🔒</div>
     </div>
 
-    <div class="container">
-        
-        <div class="card">
-            <div class="profile-header">
-                <div class="client-photo-box" onclick="document.getElementById('fileIn').click()">
-                    <img id="cFoto" src="https://via.placeholder.com/100?text=+" class="client-img">
-                    <input type="file" id="fileIn" hidden accept="image/*" onchange="upFoto(event)">
-                </div>
-                <div class="user-info">
-                    <p>Atleta Elite:</p>
-                    <h3 id="cNombre">Cargando...</h3>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <canvas id="myChart"></canvas>
-            </div>
-
-            <div class="grid-btns">
-                <button class="btn btn-grey" onclick="addP()">+ PESO</button>
-                <button class="btn btn-green" onclick="renov()">PAGAR</button>
-            </div>
+    <div class="profile-section">
+        <div class="avatar-container" onclick="document.getElementById('fileInput').click()">
+            <img id="userFoto" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="avatar-img">
+            <div class="camera-icon">📷</div>
+            <input type="file" id="fileInput" hidden accept="image/*" onchange="subirFoto(event)">
         </div>
-
-        <div class="card">
-            <p style="font-size: 0.7em; color: var(--verde); margin-top:0;">MI PROGRESO DIARIO:</p>
-            <div id="rutinaCont"></div>
+        <div style="flex-grow: 1;">
+            <div style="display:flex; justify-content: space-between; align-items: center;">
+                <h3 id="displayNombre" style="margin:0">Cargando...</h3>
+                <span id="statusBadge" class="status-pill">Estado</span>
+            </div>
+            <p id="venceTexto" style="margin:5px 0 0 0; font-size: 0.75em; color: #888;">Vence: --/--/--</p>
         </div>
-
     </div>
 
-    <a href="#" class="wa-float" onclick="enviarWA()">ENVIAR REPORTE AL COACH 📱</a>
+    <div class="chart-card">
+        <div class="section-title">PROGRESO FÍSICO</div>
+        <div class="chart-container"><canvas id="graficaProgreso"></canvas></div>
+    </div>
+
+    <div class="btn-grid">
+        <button class="btn-secondary" onclick="registrarPeso()">REGISTRAR PESO</button>
+        <button class="btn-primary" onclick="renovarPago()">RENOVAR MES</button>
+    </div>
+
+    <div class="section-title">LIBRERÍA DE EJERCICIOS</div>
+    <select id="selectGrupo" onchange="cargarEjercicios()">
+        <option value="">Selecciona Grupo...</option>
+        <option value="Pecho">Pecho</option>
+        <option value="Espalda">Espalda</option>
+        <option value="Piernas">Piernas</option>
+        <option value="Brazos">Brazos</option>
+    </select>
+    <select id="selectEjercicios">
+        <option value="">Primero elige grupo</option>
+    </select>
+    <button class="btn-primary" style="margin-bottom: 20px;" onclick="addEx()">AÑADIR A RUTINA</button>
+
+    <div class="section-title">MI RUTINA</div>
+    <div id="listaRutina"></div>
+    <button class="btn-secondary" style="margin-top:10px" onclick="reiniciarChecks()">LIMPIAR SEMANA</button>
+
+    <a href="#" class="whatsapp-btn" onclick="sendWA()">
+        <span>✉️ ENVIAR REPORTE WHATSAPP</span>
+    </a>
+</div>
 
 <script>
-    let db = JSON.parse(localStorage.getItem('trainerV10')) || {
-        nombre: "", peso: [], items: [{n:"Entrenamiento",d:false},{n:"Dieta",d:false}], foto: ""
+    const libreria = {
+        "Pecho": ["Press Banca", "Press Inclinado", "Aperturas"],
+        "Espalda": ["Dominadas", "Remo Barra", "Jalón Pecho"],
+        "Piernas": ["Sentadillas", "Prensa", "Peso Muerto"],
+        "Brazos": ["Curl Bíceps", "Tríceps Polea"]
     };
 
-    function init() {
-        if(!db.nombre) {
-            db.nombre = prompt("Nombre del cliente:");
+    let db = JSON.parse(localStorage.getItem('trainerData')) || { 
+        nombre: "", logs: [], rutina: [], pin: "", vencimiento: "", foto: "" 
+    };
+    let chart;
+
+    function verificarPIN() {
+        const input = document.getElementById('pinInput').value;
+        if (!db.pin) {
+            if (input.length === 4) { db.pin = input; save(); acceder(); }
+            else { alert("Crea un PIN de 4 dígitos"); }
+        } else {
+            if (input === db.pin) acceder();
+            else { alert("PIN Incorrecto"); document.getElementById('pinInput').value = ""; }
+        }
+    }
+
+    function acceder() {
+        document.getElementById('lockScreen').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        initApp();
+    }
+
+    function initApp() {
+        if (!db.nombre) {
+            db.nombre = prompt("Nombre del Cliente:");
+            let v = new Date(); v.setDate(v.getDate() + 30);
+            db.vencimiento = v.toISOString();
             save();
         }
-        document.getElementById('cNombre').innerText = db.nombre;
-        if(db.foto) document.getElementById('cFoto').src = db.foto;
-        drawChart();
-        drawRoutine();
+        document.getElementById('displayNombre').innerText = db.nombre;
+        if(db.foto) document.getElementById('userFoto').src = db.foto;
+        updateUI();
+        renderChart();
+        renderRutina();
     }
 
-    function save() { localStorage.setItem('trainerV10', JSON.stringify(db)); }
+    function save() { localStorage.setItem('trainerData', JSON.stringify(db)); }
 
-    function upFoto(e) {
-        const r = new FileReader();
-        r.onload = () => { db.foto = r.result; document.getElementById('cFoto').src = r.result; save(); };
-        r.readAsDataURL(e.target.files[0]);
+    function subirFoto(e) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            db.foto = reader.result;
+            document.getElementById('userFoto').src = db.foto;
+            save();
+        }
+        reader.readAsDataURL(e.target.files[0]);
     }
 
-    function drawRoutine() {
-        const c = document.getElementById('rutinaCont'); c.innerHTML = '';
-        db.items.forEach((it, i) => {
-            c.innerHTML += `
-                <div class="routine-item" onclick="tog(${i})">
-                    <span>${it.n}</span>
-                    <div class="check ${it.d ? 'active' : ''}">${it.d ? '✓' : ''}</div>
+    function updateUI() {
+        const hoy = new Date(), vence = new Date(db.vencimiento);
+        const badge = document.getElementById('statusBadge');
+        document.getElementById('venceTexto').innerText = `Vence: ${vence.toLocaleDateString()}`;
+        if (hoy > vence) { badge.innerText = "Vencido"; badge.className = "status-pill vencido"; }
+        else { badge.innerText = "Activo"; badge.className = "status-pill activo"; }
+    }
+
+    function cargarEjercicios() {
+        const g = document.getElementById('selectGrupo').value;
+        const s = document.getElementById('selectEjercicios');
+        s.innerHTML = '';
+        if(g) libreria[g].forEach(ex => s.innerHTML += `<option value="${ex}">${ex}</option>`);
+    }
+
+    function addEx() {
+        const ex = document.getElementById('selectEjercicios').value;
+        if(ex) { db.rutina.push({ n: ex, d: false }); save(); renderRutina(); }
+    }
+
+    function renderRutina() {
+        const cont = document.getElementById('listaRutina'); cont.innerHTML = '';
+        db.rutina.forEach((e, i) => {
+            cont.innerHTML += `
+                <div class="exercise-item ${e.d ? 'done' : ''}">
+                    <span>${e.n}</span>
+                    <div style="display:flex; gap:10px">
+                        <div class="check-circle ${e.d ? 'checked' : ''}" onclick="toggle(${i})">${e.d ? '✓' : ''}</div>
+                        <span onclick="del(${i})" style="cursor:pointer">🗑️</span>
+                    </div>
                 </div>`;
         });
     }
 
-    function tog(i) { db.items[i].d = !db.items[i].d; save(); drawRoutine(); }
+    function toggle(i) { db.rutina[i].d = !db.rutina[i].d; save(); renderRutina(); }
+    function del(i) { db.rutina.splice(i, 1); save(); renderRutina(); }
+    function reiniciarChecks() { db.rutina.forEach(e => e.d = false); save(); renderRutina(); }
 
-    function addP() {
-        let p = prompt("Peso:");
-        if(p) { db.peso.push({f: new Date().toLocaleDateString(), v: parseFloat(p)}); save(); drawChart(); }
+    function registrarPeso() {
+        let p = prompt("Peso actual (kg):");
+        if(p) {
+            db.logs.push({ f: new Date().toLocaleDateString(), p: parseFloat(p) });
+            save(); renderChart();
+        }
     }
 
-    function drawChart() {
-        const ctx = document.getElementById('myChart').getContext('2d');
-        if(window.ch) window.ch.destroy();
-        window.ch = new Chart(ctx, {
+    function renderChart() {
+        const ctx = document.getElementById('graficaProgreso').getContext('2d');
+        if(chart) chart.destroy();
+        chart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: db.peso.map(x => x.f),
-                datasets: [{ data: db.peso.map(x => x.v), borderColor: '#63d67e', tension: 0.4 }]
+                labels: db.logs.map(l => l.f),
+                datasets: [{ label: 'Peso', data: db.logs.map(l => l.p), borderColor: '#2ecc71', tension: 0.3, fill: true, backgroundColor: 'rgba(46, 204, 113, 0.1)' }]
             },
-            options: { responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}} }
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
         });
     }
 
-    function renov() { window.open('https://athmovil.me/tu-usuario'); }
+    function renovarPago() {
+        if(confirm("¿Renovar 30 días?")) {
+            let v = new Date(); v.setDate(v.getDate() + 30);
+            db.vencimiento = v.toISOString(); save(); updateUI();
+        }
+    }
 
-    function enviarWA() { window.open(`https://wa.me/?text=Reporte de ${db.nombre}`); }
+    function sendWA() {
+        const last = db.logs[db.logs.length - 1] || { p: 0 };
+        const msg = `💪 *REPORTE FIT: ${db.nombre}*\n⚖️ Peso: ${last.p}kg\n✅ Rutina: ${db.rutina.filter(e=>e.d).length}/${db.rutina.length}`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+    }
 
-    init();
+    if (!db.pin) document.getElementById('lockMsg').innerText = "Crea un PIN de 4 dígitos";
 </script>
 </body>
 </html>
